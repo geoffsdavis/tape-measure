@@ -17,10 +17,10 @@ public class TapeMeasureTests: XCTestCase {
                 
         let tapeMeasure = TapeMeasure(
             positionBounds: 0.0...300.0,
-            direction: .ascending,
-            valuePerSegment: 2.5,
-            segmentDistance: 60.0,
-            ticksPerSegment: 4
+            segmentValue: 2.5,
+            segmentLength: 60.0,
+            ticksPerSegment: 4,
+            direction: .ascending
         )
         
         var ticks = [TapeMeasure.Tick]()
@@ -94,10 +94,10 @@ public class TapeMeasureTests: XCTestCase {
                 
         let tapeMeasure = TapeMeasure(
             positionBounds: -100.0...200.0,
-            direction: .ascending,
-            valuePerSegment: 2.5,
-            segmentDistance: 60.0,
-            ticksPerSegment: 4
+            segmentValue: 2.5,
+            segmentLength: 60.0,
+            ticksPerSegment: 4,
+            direction: .ascending
         )
         
         var ticks = [TapeMeasure.Tick]()
@@ -152,10 +152,10 @@ public class TapeMeasureTests: XCTestCase {
         
         let tapeMeasure = TapeMeasure(
             positionBounds: 0.0...200.0,
-            direction: .ascending,
-            valuePerSegment: 2.5,
-            segmentDistance: 60.0,
-            ticksPerSegment: 4
+            segmentValue: 2.5,
+            segmentLength: 60.0,
+            ticksPerSegment: 4,
+            direction: .ascending
         )
         
         var ticks = [TapeMeasure.Tick]()
@@ -232,10 +232,10 @@ public class TapeMeasureTests: XCTestCase {
         
         let tapeMeasure = TapeMeasure(
             positionBounds: 0.0...200.0,
-            direction: .ascending,
-            valuePerSegment: 2.5,
-            segmentDistance: 60.0,
+            segmentValue: 2.5,
+            segmentLength: 60.0,
             ticksPerSegment: 4,
+            direction: .ascending,
             valueClippingBounds: 0.0...Double.greatestFiniteMagnitude
         )
         

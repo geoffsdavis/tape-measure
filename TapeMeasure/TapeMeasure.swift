@@ -33,7 +33,7 @@ import Foundation
 //    - direction: Direction
 //
 //    The value per segment. This would be the value scale of the tape masure
-//    - valuePerSegment: Double
+//    - segmentValue: Double
 //
 //    The "physical" length of a single segment. This would be the visual scale of the tape measure
 //    - segmentDistance: CGFloat
@@ -67,9 +67,9 @@ public class TapeMeasure {
     public var position: CGFloat = 0.0
     
     
-    public var valuePerSegment: Double
+    public var segmentValue: Double
     public var valuePerTick: Double {
-        return valuePerSegment / Double(ticksPerSegment)
+        return segmentValue / Double(ticksPerSegment)
     }
     public var valueClippingBounds: ClosedRange<Double>?
 
@@ -77,17 +77,17 @@ public class TapeMeasure {
     public var direction: Direction
     
 
-    public var segmentDistance: CGFloat
+    public var segmentLength: CGFloat
     public var ticksPerSegment: Int
     public var tickDistance: CGFloat {
-        return segmentDistance / CGFloat(ticksPerSegment)
+        return segmentLength / CGFloat(ticksPerSegment)
     }
     public var step: CGFloat {
         return direction == .ascending ? tickDistance : tickDistance * -1.0
     }
     
     public var originPosition: CGFloat {
-        let originOffset = (CGFloat(value / valuePerSegment) * segmentDistance)
+        let originOffset = (CGFloat(value / segmentValue) * segmentLength)
         return position - originOffset
     }
     
@@ -102,17 +102,17 @@ public class TapeMeasure {
     
     public init(
         positionBounds: ClosedRange<CGFloat>,
-        direction: Direction,
-        valuePerSegment: Double,
-        segmentDistance: CGFloat,
+        segmentValue: Double,
+        segmentLength: CGFloat,
         ticksPerSegment: Int,
+        direction: Direction,
         valueClippingBounds: ClosedRange<Double>? = nil
     ) {
         self.positionBounds = positionBounds
-        self.direction = direction
-        self.valuePerSegment = abs(valuePerSegment)
-        self.segmentDistance = abs(segmentDistance)
+        self.segmentValue = abs(segmentValue)
+        self.segmentLength = abs(segmentLength)
         self.ticksPerSegment = ticksPerSegment
+        self.direction = direction
         self.valueClippingBounds = valueClippingBounds
     }
     
@@ -122,7 +122,7 @@ public class TapeMeasure {
     }
     
     public func getPosition(forValue valueToCheck: Double) -> CGFloat {
-        return originPosition + ( CGFloat(valueToCheck / valuePerSegment ) * segmentDistance)
+        return originPosition + ( CGFloat(valueToCheck / segmentValue ) * segmentLength)
     }
     
     
@@ -136,12 +136,11 @@ public class TapeMeasure {
         value = newValue
         position = newPosition
         
-        
         // First, find the first tick's position
         var firstTickPosition = startPosition
         var originOffset: CGFloat = getOriginOffset(forPosition: startPosition)
         
-        // if there's a lower value clipping bound, adjust as necessary
+        // If there's a lower value clipping bound, adjust as necessary
         if let valueLowerBound = valueClippingBounds?.lowerBound {
             let valueLowerBoundPosition = getPosition(forValue: valueLowerBound)
             if valueLowerBoundPosition > startPosition {
@@ -155,6 +154,7 @@ public class TapeMeasure {
         var tickIndex = Int(originOffset / tickDistance)
         var tickValue = Double(tickIndex) * valuePerTick
         let firstTickRemainder = originOffset.truncatingRemainder(dividingBy: tickDistance)
+        
         // If first tick is not perfectly aligned on a tick multiple value, make corrections
         if originOffset >= 0.0 && firstTickRemainder > 0.0 {
             firstTickPosition += tickDistance - firstTickRemainder
