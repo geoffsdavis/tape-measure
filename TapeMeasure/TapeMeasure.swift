@@ -60,11 +60,11 @@ public class TapeMeasure {
     
 
     // this is the actual value of some point on the tape measure, passed in to obtain a span of tape measure
-    public var value: Double = 0.0
+    private var _value: Double = 0.0
     
     // this is the position of some point on the tape measure, also passed in to obtain a span of tape measure
     // (the position does not necessarily have to be within the bounds of the span of tape being rendered)
-    public var position: CGFloat = 0.0
+    public var _position: CGFloat = 0.0
     
     
     public var segmentValue: Double
@@ -72,7 +72,7 @@ public class TapeMeasure {
         return segmentValue / Double(ticksPerSegment)
     }
     public var valueClippingBounds: ClosedRange<Double>?
-
+    public var valueOriginOffset: Double
     
     public var direction: Direction
     
@@ -87,8 +87,9 @@ public class TapeMeasure {
     }
     
     public var originPosition: CGFloat {
-        let originOffset = (CGFloat(value / segmentValue) * segmentLength)
-        return position - originOffset
+        let originOffset = (CGFloat(_value / segmentValue) * segmentLength)
+        let adjustmentByValueOffset = CGFloat(valueOriginOffset / segmentValue) * segmentLength
+        return _position - originOffset + adjustmentByValueOffset
     }
     
     
@@ -106,7 +107,8 @@ public class TapeMeasure {
         segmentLength: CGFloat,
         ticksPerSegment: Int,
         direction: Direction,
-        valueClippingBounds: ClosedRange<Double>? = nil
+        valueClippingBounds: ClosedRange<Double>? = nil,
+        valueOriginOffset: Double = 0.0
     ) {
         self.positionBounds = positionBounds
         self.segmentValue = abs(segmentValue)
@@ -114,6 +116,7 @@ public class TapeMeasure {
         self.ticksPerSegment = ticksPerSegment
         self.direction = direction
         self.valueClippingBounds = valueClippingBounds
+        self.valueOriginOffset = valueOriginOffset
     }
     
     
@@ -127,14 +130,14 @@ public class TapeMeasure {
     
     
     public func refresh(usingValue newValue: Double, atPosition newPosition: CGFloat) {
-        value = newValue
-        position = newPosition
+        _value = newValue
+        _position = newPosition
     }
     
     
     public func ticks(forValue newValue: Double, atPosition newPosition: CGFloat) -> [Tick] {
-        value = newValue
-        position = newPosition
+        _value = newValue
+        _position = newPosition
         
         // First, find the first tick's position
         var firstTickPosition = startPosition
@@ -152,7 +155,7 @@ public class TapeMeasure {
         // Next, populate the first tick with all other initial tick date (value and index).
         // These will be iterated upon during tick generation
         var tickIndex = Int(originOffset / tickDistance)
-        var tickValue = Double(tickIndex) * valuePerTick
+        var tickValue = (Double(tickIndex) * valuePerTick) + valueOriginOffset
         let firstTickRemainder = originOffset.truncatingRemainder(dividingBy: tickDistance)
         
         // If first tick is not perfectly aligned on a tick multiple value, make corrections

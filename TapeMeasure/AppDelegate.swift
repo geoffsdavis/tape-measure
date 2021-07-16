@@ -25,12 +25,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidBecomeActive(_ notification: Notification) {
         
         let tapeMeasure = TapeMeasure(
-            positionBounds: 0.0...200.0,
+            positionBounds: 0.0...300.0,
             segmentValue: 2.5,
             segmentLength: 60.0,
             ticksPerSegment: 4,
             direction: .ascending,
-            valueClippingBounds: 0.0...Double.greatestFiniteMagnitude
+            valueClippingBounds: nil,
+            //valueClippingBounds: 0.0...Double.greatestFiniteMagnitude,
+            valueOriginOffset: -0.25
         )
 
         var ticks = [TapeMeasure.Tick]()
@@ -40,14 +42,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         //tapeMeasure.positionBounds = 0.0...300.0
         
-        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 179.0)
-        loopPrintTicks(ticks, forTapeMeasure: tapeMeasure)
+//        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 179.0)
+//        loopPrintTicks(ticks, forTapeMeasure: tapeMeasure)
 
         ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 180.0)
         loopPrintTicks(ticks, forTapeMeasure: tapeMeasure)
         
-        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 181.0)
-        loopPrintTicks(ticks, forTapeMeasure: tapeMeasure)
+//        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 181.0)
+//        loopPrintTicks(ticks, forTapeMeasure: tapeMeasure)
         
     }
     

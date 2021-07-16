@@ -308,6 +308,69 @@ public class TapeMeasureTests: XCTestCase {
     }
     
 
+    public func test_asc_pos_with_value_offset_1() {
+                
+        let tapeMeasure = TapeMeasure(
+            positionBounds: 0.0...300.0,
+            segmentValue: 2.5,
+            segmentLength: 60.0,
+            ticksPerSegment: 4,
+            direction: .ascending,
+            valueClippingBounds: nil,
+            valueOriginOffset: 0.25
+        )
+        
+        var ticks = [TapeMeasure.Tick]()
+        var midTick = TapeMeasure.Tick(position: 0.0, value: 0.0, segmentTickIndex: 0)
+        
+        // MARK: 5.0 @ 180.0 w/ 0.25 value offset
+        
+        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 180.0)
+        XCTAssertEqual(ticks.count, 20)
+
+        if let firstTick = ticks.first {
+            XCTAssertEqual(firstTick.segmentTickIndex, 0)
+            XCTAssertEqual(firstTick.position, 6.0, accuracy: floatAccuracy)
+            XCTAssertEqual(firstTick.value, -2.25, accuracy: doubleAccuracy)
+        }
+        if let lastTick = ticks.last {
+            XCTAssertEqual(lastTick.segmentTickIndex, 3)
+            XCTAssertEqual(lastTick.position, 291.0, accuracy: floatAccuracy)
+            XCTAssertEqual(lastTick.value, 9.625, accuracy: doubleAccuracy)
+        }
+        midTick = ticks[12]
+        XCTAssertEqual(midTick.segmentTickIndex, 0)
+        XCTAssertEqual(midTick.position, 186.0, accuracy: floatAccuracy)
+        XCTAssertEqual(midTick.value, 5.25, accuracy: doubleAccuracy)
+                
+
+        
+        // MARK: 5.0 @ 180.0 w/ -0.25 value offset
+        
+        tapeMeasure.valueOriginOffset = -0.25
+        
+        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 180.0)
+        XCTAssertEqual(ticks.count, 20)
+
+        if let firstTick = ticks.first {
+            XCTAssertEqual(firstTick.segmentTickIndex, 1)
+            XCTAssertEqual(firstTick.position, 9.0, accuracy: floatAccuracy)
+            XCTAssertEqual(firstTick.value, -2.125, accuracy: doubleAccuracy)
+        }
+        if let lastTick = ticks.last {
+            XCTAssertEqual(lastTick.segmentTickIndex, 0)
+            XCTAssertEqual(lastTick.position, 294.0, accuracy: floatAccuracy)
+            XCTAssertEqual(lastTick.value, 9.75, accuracy: doubleAccuracy)
+        }
+        midTick = ticks[11]
+        XCTAssertEqual(midTick.segmentTickIndex, 0)
+        XCTAssertEqual(midTick.position, 174.0, accuracy: floatAccuracy)
+        XCTAssertEqual(midTick.value, 4.75, accuracy: doubleAccuracy)
+        
+        
+    }
+    
+    
 }
 
 
