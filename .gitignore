@@ -1,0 +1,12 @@
+.DS_store
+*.xcuserstate
+project.xcworkspace/
+xcuserdata/
+build
+.idea
+Pods
+Podfile.lock
+Gemfile
+Gemfile.lock
+
+# /OptionFighter-Core/Assets/Mock Data/mock_ADBE_history.json
