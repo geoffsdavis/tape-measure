@@ -8,10 +8,10 @@ import Foundation
 //
 //  Key Concepts:
 //
-//    * value - the acutal value at a given position. For instance, on a thermometer,
+//    * anchor value - the acutal value at a given position. For instance, on a thermometer,
 //    the value at the position for boiling water would be 100ºC (212ºF)
 //
-//    * position - a given "physical" position on the tape measure. For intance, on a thermometer,
+//    * anchor position - a given "physical" position on the tape measure. For intance, on a thermometer,
 //    the position for boiling water might at 300 pixels from the therometer's origin
 //
 //    * origin - the position at 0.0. Segment borders align with this position
@@ -92,18 +92,13 @@ public class TapeMeasure {
         return direction == .ascending ? tickDistance : tickDistance * -1.0
     }
     
-    public var originPosition: CGFloat {
-        let originOffset = (CGFloat(_value / segmentValue) * segmentLength)
-        let adjustmentByValueOffset = CGFloat(valueOriginOffset / segmentValue) * segmentLength
-        return _position - originOffset + adjustmentByValueOffset
-    }
-    
     public var startPosition: CGFloat {
         return direction == .ascending ? positionBounds.lowerBound : positionBounds.upperBound
     }
     public var endPosition: CGFloat {
         return direction == .ascending ? positionBounds.upperBound : positionBounds.lowerBound
     }
+    
     
     // MARK: init
     
@@ -126,34 +121,46 @@ public class TapeMeasure {
     }
     
     
-    public func getOriginOffset(forPosition positionToCheck: CGFloat) -> CGFloat {
+//    public var originPosition_XXX: CGFloat {
+//        let originOffset = (CGFloat(_value / segmentValue) * segmentLength)
+//        let adjustmentByValueOffset = CGFloat(valueOriginOffset / segmentValue) * segmentLength
+//        return _position - originOffset + adjustmentByValueOffset
+//    }
+    
+    //
+    public func getOriginPosition(forAnchorValue anchorValue: Double, atAnchorPosition anchorPosition: CGFloat) -> CGFloat {
+        let originOffsetFromAnchor = (CGFloat(anchorValue / segmentValue) * segmentLength)
+        let adjustmentByValueOffset = CGFloat(valueOriginOffset / segmentValue) * segmentLength
+        return anchorPosition - originOffsetFromAnchor + adjustmentByValueOffset
+    }
+    
+    
+    public func getOriginOffset(fromPosition positionToCheck: CGFloat) -> CGFloat {
+        let originPosition = getOriginPosition(forAnchorValue: _value, atAnchorPosition: _position)
         return positionToCheck - originPosition
     }
     
     public func getPosition(forValue valueToCheck: Double) -> CGFloat {
+        let originPosition = getOriginPosition(forAnchorValue: _value, atAnchorPosition: _position)
         return originPosition + ( CGFloat(valueToCheck / segmentValue ) * segmentLength)
     }
     
-    
-    public func refresh(usingValue newValue: Double, atPosition newPosition: CGFloat) {
-        _value = newValue
-        _position = newPosition
-    }
+
     
     
-    public func ticks(forValue newValue: Double, atPosition newPosition: CGFloat) -> [Tick] {
-        _value = newValue
-        _position = newPosition
+    public func ticks(forAnchorValue anchorValue: Double, atAnchorPosition anchorPosition: CGFloat) -> [Tick] {
+        _value = anchorValue
+        _position = anchorPosition
         
         // First, find the first tick's position
         var firstTickPosition = startPosition
-        var originOffset: CGFloat = getOriginOffset(forPosition: startPosition)
+        var originOffset: CGFloat = getOriginOffset(fromPosition: startPosition)
         
         // If there's a lower value clipping bound, adjust as necessary
         if let valueLowerBound = valueClippingBounds?.lowerBound {
             let valueLowerBoundPosition = getPosition(forValue: valueLowerBound)
             if valueLowerBoundPosition > startPosition {
-                originOffset = getOriginOffset(forPosition: valueLowerBoundPosition)
+                originOffset = getOriginOffset(fromPosition: valueLowerBoundPosition)
                 firstTickPosition = valueLowerBoundPosition
             }
         }

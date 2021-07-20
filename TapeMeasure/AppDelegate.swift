@@ -45,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 179.0)
 //        loopPrintTicks(ticks, forTapeMeasure: tapeMeasure)
 
-        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 180.0)
+        ticks = tapeMeasure.ticks(forAnchorValue: 5.0, atAnchorPosition: 180.0)
         loopPrintTicks(ticks, forTapeMeasure: tapeMeasure)
         
 //        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 181.0)

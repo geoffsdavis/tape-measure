@@ -28,7 +28,7 @@ public class TapeMeasureTests: XCTestCase {
         
         // MARK: 50.0 @ 150.0
         
-        ticks = tapeMeasure.ticks(forValue: 50.0, atPosition: 150.0)
+        ticks = tapeMeasure.ticks(forAnchorValue: 50.0, atAnchorPosition: 150.0)
         XCTAssertEqual(ticks.count, 21)
 
         if let firstTick = ticks.first {
@@ -49,7 +49,7 @@ public class TapeMeasureTests: XCTestCase {
         
         // MARK: 50.0 @ 149.9
         
-        ticks = tapeMeasure.ticks(forValue: 50.0, atPosition: 149.9)
+        ticks = tapeMeasure.ticks(forAnchorValue: 50.0, atAnchorPosition: 149.9)
         XCTAssertEqual(ticks.count, 20)
         
         if let firstTick = ticks.first {
@@ -70,7 +70,7 @@ public class TapeMeasureTests: XCTestCase {
         
         // MARK: 50.0 @ 151.1
         
-        ticks = tapeMeasure.ticks(forValue: 50.0, atPosition: 150.1)
+        ticks = tapeMeasure.ticks(forAnchorValue: 50.0, atAnchorPosition: 150.1)
         XCTAssertEqual(ticks.count, 20)
         
         if let firstTick = ticks.first {
@@ -106,7 +106,7 @@ public class TapeMeasureTests: XCTestCase {
         
         // MARK: 50.0 @ 150.0
         
-        ticks = tapeMeasure.ticks(forValue: 50.0, atPosition: 150.0)
+        ticks = tapeMeasure.ticks(forAnchorValue: 50.0, atAnchorPosition: 150.0)
         XCTAssertEqual(ticks.count, 20)
 
         if let firstTick = ticks.first {
@@ -127,7 +127,7 @@ public class TapeMeasureTests: XCTestCase {
         
         // MARK: 50.0 @ 150.0
         
-        ticks = tapeMeasure.ticks(forValue: 50.0, atPosition: -25.0)
+        ticks = tapeMeasure.ticks(forAnchorValue: 50.0, atAnchorPosition: -25.0)
         XCTAssertEqual(ticks.count, 21)
 
         if let firstTick = ticks.first {
@@ -164,7 +164,7 @@ public class TapeMeasureTests: XCTestCase {
         
         // MARK: 5.0 @ 180.0
         
-        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 180.0)
+        ticks = tapeMeasure.ticks(forAnchorValue: 5.0, atAnchorPosition: 180.0)
         XCTAssertEqual(ticks.count, 14)
         
         if let firstTick = ticks.first {
@@ -185,7 +185,7 @@ public class TapeMeasureTests: XCTestCase {
         
         // MARK: 5.0 @ 179.0
         
-        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 179.0)
+        ticks = tapeMeasure.ticks(forAnchorValue: 5.0, atAnchorPosition: 179.0)
         XCTAssertEqual(ticks.count, 13)
         
         if let firstTick = ticks.first {
@@ -206,7 +206,7 @@ public class TapeMeasureTests: XCTestCase {
         
         // MARK: 5.0 @ 181.0
         
-        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 181.0)
+        ticks = tapeMeasure.ticks(forAnchorValue: 5.0, atAnchorPosition: 181.0)
         XCTAssertEqual(ticks.count, 14)
         
         if let firstTick = ticks.first {
@@ -245,7 +245,7 @@ public class TapeMeasureTests: XCTestCase {
         
         // MARK: 5.0 @ 180.0
         
-        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 180.0)
+        ticks = tapeMeasure.ticks(forAnchorValue: 5.0, atAnchorPosition: 180.0)
         XCTAssertEqual(ticks.count, 10)
         
         if let firstTick = ticks.first {
@@ -266,7 +266,7 @@ public class TapeMeasureTests: XCTestCase {
         
         // MARK: 5.0 @ 179.0
         
-        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 179.0)
+        ticks = tapeMeasure.ticks(forAnchorValue: 5.0, atAnchorPosition: 179.0)
         XCTAssertEqual(ticks.count, 10)
         
         if let firstTick = ticks.first {
@@ -287,7 +287,7 @@ public class TapeMeasureTests: XCTestCase {
         
         // MARK: 5.0 @ 181.0
         
-        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 181.0)
+        ticks = tapeMeasure.ticks(forAnchorValue: 5.0, atAnchorPosition: 181.0)
         XCTAssertEqual(ticks.count, 10)
         
         if let firstTick = ticks.first {
@@ -325,7 +325,7 @@ public class TapeMeasureTests: XCTestCase {
         
         // MARK: 5.0 @ 180.0 w/ 0.25 value offset
         
-        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 180.0)
+        ticks = tapeMeasure.ticks(forAnchorValue: 5.0, atAnchorPosition: 180.0)
         XCTAssertEqual(ticks.count, 20)
 
         if let firstTick = ticks.first {
@@ -349,7 +349,7 @@ public class TapeMeasureTests: XCTestCase {
         
         tapeMeasure.valueOriginOffset = -0.25
         
-        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 180.0)
+        ticks = tapeMeasure.ticks(forAnchorValue: 5.0, atAnchorPosition: 180.0)
         XCTAssertEqual(ticks.count, 20)
 
         if let firstTick = ticks.first {
