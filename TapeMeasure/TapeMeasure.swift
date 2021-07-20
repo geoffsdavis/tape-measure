@@ -64,24 +64,30 @@ public class TapeMeasure {
     
     // this is the position of some point on the tape measure, also passed in to obtain a span of tape measure
     // (the position does not necessarily have to be within the bounds of the span of tape being rendered)
-    public var _position: CGFloat = 0.0
+    private var _position: CGFloat = 0.0
     
     
+    // MARK: public parameters, exposed for mutation
+    
+    public var positionBounds: ClosedRange<CGFloat>
     public var segmentValue: Double
-    public var valuePerTick: Double {
-        return segmentValue / Double(ticksPerSegment)
-    }
+    public var segmentLength: CGFloat
+    public var ticksPerSegment: Int
+    public var direction: Direction
     public var valueClippingBounds: ClosedRange<Double>?
     public var valueOriginOffset: Double
     
-    public var direction: Direction
     
-
-    public var segmentLength: CGFloat
-    public var ticksPerSegment: Int
+    // MARK: computed properties
+    
+    public var valuePerTick: Double {
+        return segmentValue / Double(ticksPerSegment)
+    }
+    
     public var tickDistance: CGFloat {
         return segmentLength / CGFloat(ticksPerSegment)
     }
+    
     public var step: CGFloat {
         return direction == .ascending ? tickDistance : tickDistance * -1.0
     }
@@ -92,14 +98,14 @@ public class TapeMeasure {
         return _position - originOffset + adjustmentByValueOffset
     }
     
-    
-    public var positionBounds: ClosedRange<CGFloat>
     public var startPosition: CGFloat {
         return direction == .ascending ? positionBounds.lowerBound : positionBounds.upperBound
     }
     public var endPosition: CGFloat {
         return direction == .ascending ? positionBounds.upperBound : positionBounds.lowerBound
     }
+    
+    // MARK: init
     
     public init(
         positionBounds: ClosedRange<CGFloat>,
