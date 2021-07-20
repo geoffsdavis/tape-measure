@@ -32,7 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             direction: .ascending,
             valueClippingBounds: nil,
             //valueClippingBounds: 0.0...Double.greatestFiniteMagnitude,
-            valueOriginOffset: -0.25
+            valueOriginOffset: 0.0
         )
 
         var ticks = [TapeMeasure.Tick]()
@@ -44,8 +44,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
 //        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 179.0)
 //        loopPrintTicks(ticks, forTapeMeasure: tapeMeasure)
-
-        ticks = tapeMeasure.ticks(forAnchorValue: 5.0, atAnchorPosition: 180.0)
+        
+        let anchorValue: Double = -5.0
+        let anchorPosition: CGFloat = -180.0
+        
+        ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
         loopPrintTicks(ticks, forTapeMeasure: tapeMeasure)
         
 //        ticks = tapeMeasure.ticks(forValue: 5.0, atPosition: 181.0)
