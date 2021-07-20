@@ -115,18 +115,23 @@ public class TapeMeasure {
     
     // MARK: convenience methods for calculations
     
-    // position for a given value, WITHOUT corrections of any kind
+
     private func rawPosition(forValue value: Double) -> CGFloat {
-        return (CGFloat(value / segmentValue) * segmentLength)
+        return CGFloat(value / segmentValue) * segmentLength
     }
     
+    private func rawValue(atPosition position: CGFloat) -> Double {
+        return Double(position / segmentLength) * segmentValue
+    }
+    
+    // corrects for a possible origin offset by value
     public func originPosition(
             forAnchorValue anchorValue: Double,
             atAnchorPosition anchorPosition: CGFloat
     ) -> CGFloat {
-        let originOffsetFromAnchor = rawPosition(forValue: anchorValue)
-        let adjustmentByValueOffset = rawPosition(forValue: valueOriginOffset)
-        return anchorPosition - originOffsetFromAnchor + adjustmentByValueOffset
+        let distanceOfAnchorFromOrigin = rawPosition(forValue: anchorValue)
+        let distanceOfOriginOffsetByValue = rawPosition(forValue: valueOriginOffset)
+        return anchorPosition - distanceOfAnchorFromOrigin + distanceOfOriginOffsetByValue
     }
     
     // remember, the origin itself may not be at position 0.0, due to a value-based offset of the origin from value 0.0
@@ -147,6 +152,15 @@ public class TapeMeasure {
         let rawPositionForValue = rawPosition(forValue: valueToCheck)
         let originPosition = originPosition(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
         return originPosition + rawPositionForValue
+    }
+    
+    public func value(
+        atPosition positionToCheck: CGFloat,
+        forAnchorValue anchorValue: Double,
+        atAnchorPosition anchorPosition: CGFloat
+    ) -> Double {
+        let originOffset = distanceToOrigin(fromPosition: positionToCheck, forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+        return rawValue(atPosition: originOffset)
     }
     
     
