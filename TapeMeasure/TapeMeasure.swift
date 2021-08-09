@@ -249,10 +249,10 @@ extension TapeMeasure {
         
         public func report() {
             if segmentTickIndex == 0 {
-                print("[\(segmentTickIndex)] \(position.roundToDecimal(2)) ------------ \"\(value)\"")
+                print("[\(segmentTickIndex)] \(position) ------------ \"\(value)\"")
             }
             else {
-                print("[\(segmentTickIndex)] \(position.roundToDecimal(2)) -- \"\(value)\"")
+                print("[\(segmentTickIndex)] \(position) -- \"\(value)\"")
             }
         }
         
