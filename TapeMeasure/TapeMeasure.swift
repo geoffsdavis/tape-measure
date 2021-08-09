@@ -69,6 +69,10 @@ public class TapeMeasure {
     public var valueClippingBounds: ClosedRange<Double>?
     public var valueOriginOffset: Double
     
+    // Special property for dealing with precision issues
+    // when determining if ticks line up perfectly with origin
+    public var tickAlignmentEpsilon: CGFloat = 0.001
+    
     
     // MARK: computed properties
     
@@ -185,7 +189,16 @@ public class TapeMeasure {
         // These will be iterated upon during tick generation
         var tickIndex = Int(originOffset / tickDistance)
         var tickValue = (Double(tickIndex) * valuePerTick) + valueOriginOffset
-        let firstTickRemainder = originOffset.truncatingRemainder(dividingBy: tickDistance)
+        
+        // Find the offset of the first tick, in case the ticks are NOT aligned with the origin
+        // (A firstTickRemainder value of 0.0 would indicate there's no offset, so the ticks ARE aligned)
+        var firstTickRemainder = originOffset.truncatingRemainder(dividingBy: tickDistance)
+        
+        // Correct floating-point precision issues that might cause failure to infer that ticks are aligned (due to tiny non-zero offset)
+        let precisionBounds = (abs(firstTickRemainder) - tickAlignmentEpsilon)...(abs(firstTickRemainder) + tickAlignmentEpsilon)
+        if precisionBounds.contains(tickDistance) {
+            firstTickRemainder = 0.0
+        }
         
         // If first tick is not perfectly aligned on a tick multiple value, make corrections
         if originOffset >= 0.0 && firstTickRemainder > 0.0 {
@@ -236,10 +249,10 @@ extension TapeMeasure {
         
         public func report() {
             if segmentTickIndex == 0 {
-                print("[\(segmentTickIndex)] \(position) ------------ \"\(value)\"")
+                print("[\(segmentTickIndex)] \(position.roundToDecimal(2)) ------------ \"\(value)\"")
             }
             else {
-                print("[\(segmentTickIndex)] \(position) -- \"\(value)\"")
+                print("[\(segmentTickIndex)] \(position.roundToDecimal(2)) -- \"\(value)\"")
             }
         }
         
