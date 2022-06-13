@@ -148,16 +148,6 @@ public class TapeMeasure {
         return positionToCheck - originPosition
     }
     
-    public func position(
-        forValue valueToCheck: Double,
-        forAnchorValue anchorValue: Double,
-        atAnchorPosition anchorPosition: CGFloat
-    ) -> CGFloat {
-        let rawPositionForValue = rawPosition(forValue: valueToCheck)
-        let originPosition = originPosition(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
-        return originPosition + rawPositionForValue
-    }
-    
     public func value(
         atPosition positionToCheck: CGFloat,
         forAnchorValue anchorValue: Double,
@@ -167,7 +157,16 @@ public class TapeMeasure {
         return rawValue(atPosition: originOffset)
     }
     
-    
+    public func position(
+        forValue valueToCheck: Double,
+        forAnchorValue anchorValue: Double,
+        atAnchorPosition anchorPosition: CGFloat
+    ) -> CGFloat {
+        let adjustedValue = valueToCheck - valueOriginOffset
+        let rawPositionForValue = rawPosition(forValue: adjustedValue)
+        let originPosition = originPosition(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+        return originPosition + rawPositionForValue
+    }
     
     
     public func ticks(forAnchorValue anchorValue: Double, atAnchorPosition anchorPosition: CGFloat) -> [Tick] {
@@ -191,7 +190,10 @@ public class TapeMeasure {
         var tickValue = (Double(tickIndex) * valuePerTick) + valueOriginOffset
         
         // Find the offset of the first tick, in case the ticks are NOT aligned with the origin
-        // (A firstTickRemainder value of 0.0 would indicate there's no offset, so the ticks ARE aligned)
+        // Find the offset of the first tick, in case the ticks are NOT aligned with the origin.
+        // This offset is the distance the first tick would be located from the starting boundary position, inside of the boundaries.
+        // (A firstTickRemainder value of 0.0 would indicate there's no offset, so the ticks ARE aligned, and therefore the first tick
+        // would be located exactly at the starting boundary position.)
         var firstTickRemainder = originOffset.truncatingRemainder(dividingBy: tickDistance)
         
         // Correct floating-point precision issues that might cause failure to infer that ticks are aligned (due to tiny non-zero offset)
