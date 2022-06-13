@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 
-struct StageView: NSViewRepresentable {
+struct StageContainerView: NSViewRepresentable {
     
     
     typealias NSViewType = NSView
@@ -17,22 +17,10 @@ struct StageView: NSViewRepresentable {
         
     func makeNSView(context: Context) -> NSView {
         
-        let view = NSView()
-        
+        let frame = NSRect(origin: .zero, size: CGSize(width: 1280.0, height: 720.0))
+        let view = StageView(frame: frame)
         return view
 
-//        let sceneView = VSCOBallSceneView(frame: .zero, options: nil)
-//
-//        sceneView.scene = VSCOBallScene(controller: vscoBallController)
-//        sceneView.backgroundColor = XPColor.black
-//        sceneView.showsStatistics = false
-//        //sceneView.debugOptions = [.renderAsWireframe]
-//        sceneView.allowsCameraControl = VSCOBallController.allowCameraControl // default is false
-//        sceneView.autoenablesDefaultLighting = true // default is false
-//        sceneView.rendersContinuously = false // default is false
-//        sceneView.isPlaying = false // default is false
-//
-//        return sceneView
     }
     
     func updateNSView(_ nsView: NSView, context: Context) {
