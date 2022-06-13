@@ -130,7 +130,7 @@ public class TapeMeasure {
     
     // corrects for a possible origin offset by value
     public func originPosition(
-            forAnchorValue anchorValue: Double,
+            withAnchorValue anchorValue: Double,
             atAnchorPosition anchorPosition: CGFloat
     ) -> CGFloat {
         let distanceOfAnchorFromOrigin = rawPosition(forValue: anchorValue)
@@ -141,30 +141,30 @@ public class TapeMeasure {
     // remember, the origin itself may not be at position 0.0, due to a value-based offset of the origin from value 0.0
     public func distanceToOrigin(
         fromPosition positionToCheck: CGFloat,
-        forAnchorValue anchorValue: Double,
+        withAnchorValue anchorValue: Double,
         atAnchorPosition anchorPosition: CGFloat
     ) -> CGFloat {
-        let originPosition = originPosition(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+        let originPosition = originPosition(withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
         return positionToCheck - originPosition
     }
     
     public func value(
         atPosition positionToCheck: CGFloat,
-        forAnchorValue anchorValue: Double,
+        withAnchorValue anchorValue: Double,
         atAnchorPosition anchorPosition: CGFloat
     ) -> Double {
-        let originOffset = distanceToOrigin(fromPosition: positionToCheck, forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+        let originOffset = distanceToOrigin(fromPosition: positionToCheck, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
         return rawValue(atPosition: originOffset)
     }
     
     public func position(
         forValue valueToCheck: Double,
-        forAnchorValue anchorValue: Double,
+        withAnchorValue anchorValue: Double,
         atAnchorPosition anchorPosition: CGFloat
     ) -> CGFloat {
         let adjustedValue = valueToCheck - valueOriginOffset
         let rawPositionForValue = rawPosition(forValue: adjustedValue)
-        let originPosition = originPosition(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+        let originPosition = originPosition(withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
         return originPosition + rawPositionForValue
     }
     
@@ -173,13 +173,13 @@ public class TapeMeasure {
         
         // First, find the first tick's position
         var firstTickPosition = startPosition
-        var originOffset: CGFloat = distanceToOrigin(fromPosition: startPosition, forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+        var originOffset: CGFloat = distanceToOrigin(fromPosition: startPosition, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
         
         // If there's a lower value clipping bound, adjust as necessary
         if let valueLowerBound = valueClippingBounds?.lowerBound {
-            let valueLowerBoundPosition = position(forValue: valueLowerBound, forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+            let valueLowerBoundPosition = position(forValue: valueLowerBound, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
             if valueLowerBoundPosition > startPosition {
-                originOffset = distanceToOrigin(fromPosition: valueLowerBoundPosition, forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+                originOffset = distanceToOrigin(fromPosition: valueLowerBoundPosition, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
                 firstTickPosition = valueLowerBoundPosition
             }
         }
@@ -215,7 +215,7 @@ public class TapeMeasure {
         // Finally, set the last tick position, adjusting if there's an upper value clipping bound
         var lastTickPosition = endPosition
         if let valueUpperBound = valueClippingBounds?.upperBound {
-            let valueUpperBoundPosition = position(forValue: valueUpperBound, forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+            let valueUpperBoundPosition = position(forValue: valueUpperBound, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
             lastTickPosition = min(lastTickPosition, valueUpperBoundPosition)
         }
 
