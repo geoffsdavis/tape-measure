@@ -19,7 +19,7 @@ class StageView: NSView {
         super.init(frame: frame)
         layer = CALayer()
         renderArt()
-        renderTicks()
+        createTicks()
     }
     
     private func renderArt() {
@@ -79,19 +79,70 @@ class StageView: NSView {
     }
     
     
-    private func renderTicks() {
+    private func createTicks() {
         
-        let tapeMeasure = TapeMeasure(
-            positionBounds: -280.0...280.0,
-            segmentValue: 36.0,
-            segmentLength: 100.0,
+        // 1
+        var tapeMeasure = TapeMeasure(
+            positionBounds: -300...300.0,
+            segmentValue: 10.0,
+            segmentLength: 60.0,
             ticksPerSegment: 4,
             direction: .ascending,
-            valueClippingBounds: 32.0...212.0,
-            valueOriginOffset: -4.0
+            valueClippingBounds: nil,
+            valueOriginOffset: 0.0
         )
+
+        var anchorValue: CGFloat = 0.0
+        var anchorPosition = tapeMeasure.startPosition
+
+        // 2
+        tapeMeasure.segmentValue = 36.0
+
+        // 3
+        tapeMeasure.valueClippingBounds = 32...212.0
+
+        // 4
+        tapeMeasure.valueOriginOffset = -4.0
+
+        // 5
+        anchorValue = 32.0
+
+        // 7
+        tapeMeasure.positionBounds = -260.0...260.0
+
+        // 8
+        anchorPosition = tapeMeasure.startPosition
+
+        // 9
+        tapeMeasure.segmentLength = 100.0
         
-        let ticks = tapeMeasure.ticks(forAnchorValue: 32.0, atAnchorPosition: tapeMeasure.startPosition)
+        // 10
+        tapeMeasure = TapeMeasure(
+            positionBounds: -300...300.0,
+            segmentValue: 2.0,
+            segmentLength: 80.0,
+            ticksPerSegment: 4,
+            direction: .ascending,
+            valueClippingBounds: 94.0...106.0,
+            valueOriginOffset: 0.0
+        )
+        anchorValue = 100.0
+        anchorPosition = 0.0
+
+
+        let ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+        
+        renderTicks(ticks: ticks)
+        
+        renderMarker(forTapeMeasure: tapeMeasure, forValue: 98.6, withAnchorValue: 100.0, atAnchorPosition: 0.0)
+        
+        renderMarker(forTapeMeasure: tapeMeasure, forPosition: 152.0, withAnchorValue: 100.0, atAnchorPosition: 0.0)
+
+        
+    }
+        
+        
+    private func renderTicks(ticks: [TapeMeasure.Tick]) {
         
         let baseline = frame.size.height / 2.0 + 20.0
         let center = frame.size.width / 2.0
@@ -107,7 +158,18 @@ class StageView: NSView {
             switch tick.segmentTickIndex {
             case 0:
                 lineHeight = 20.0
-                let textView = NSTextView(frame: NSRect(origin: CGPoint(x: center + tick.position - 30.0, y: baseline + lineHeight + 4.0), size: CGSize(width: 60.0, height: 20.0)))
+                let textView = NSTextView(
+                    frame: NSRect(
+                        origin: CGPoint(
+                            x: center + tick.position - 30.0,
+                            y: baseline + lineHeight + 4.0
+                        ),
+                        size: CGSize(
+                            width: 60.0,
+                            height: 20.0
+                        )
+                    )
+                )
                 textView.font = NSFont.systemFont(ofSize: 14)
                 textView.alignment = .center
                 textView.textColor = .white
@@ -131,6 +193,16 @@ class StageView: NSView {
         layer?.addSublayer(ticksLayer)
 
         
+    }
+    
+    private func renderMarker(forTapeMeasure tapeMeasure: TapeMeasure, forValue value: Double, withAnchorValue anchorValue: Double, atAnchorPosition anchorPosition: CGFloat) {
+        let position = tapeMeasure.position(forValue: value, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+        print("position: \(position)")
+    }
+    
+    private func renderMarker(forTapeMeasure tapeMeasure: TapeMeasure, forPosition position: CGFloat, withAnchorValue anchorValue: Double, atAnchorPosition anchorPosition: CGFloat) {
+        let value = tapeMeasure.value(atPosition: position, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+        print("value: \(value)")
     }
     
 }
