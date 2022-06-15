@@ -17,7 +17,7 @@ struct StageContainerView: NSViewRepresentable {
         
     func makeNSView(context: Context) -> NSView {
         
-        let frame = NSRect(origin: .zero, size: CGSize(width: 1280.0, height: 720.0))
+        let frame = NSRect(origin: .zero, size: AppDelegate.Constants.appSize)
         let view = StageView(frame: frame)
         return view
 
