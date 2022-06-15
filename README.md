@@ -56,9 +56,9 @@ let segmentTickIndex: Int // zero-based index for determining which (if any) sub
       
 ## Example: Let's Make a Thermometer
 
-**Step #0**: Create a basic thermometer:
+**Step #0: Create a basic thermometer**
 
-We create a simple Mac app, and render some primitive line art to draw a thermometer.
+We create a simple Mac app, and render some primitive line art to draw a thermometer. The thermometer has a resolution-independent width of 600pt, extending from -300 across the center at 0 to 300 on the other end.
 
 > **Note**
 > Here we are using AppKit's NSViews and CoreAnimation's CALayers, but you could use any graphics framework of your choice.
