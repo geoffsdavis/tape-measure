@@ -11,40 +11,62 @@ import AppKit
 
 class StageView: NSView {
     
+    var xCenter: CGFloat {
+        frame.size.width / 2.0
+    }
+    
+    var yCenter: CGFloat {
+        frame.size.height / 2.0
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     public override init(frame: NSRect) {
         super.init(frame: frame)
+        print("frame: \(frame)")
         layer = CALayer()
         renderArt()
         createTicks()
+        renderMarkers()
+    }
+    
+    private func renderMarkers() {
+        let yOffset: CGFloat = -57.0
+        let leftText = createMarkerText(value: -300.0, origin: CGPoint(x: xCenter - 300.0, y: yCenter + yOffset))
+        addSubview(leftText)
+        let centerText = createMarkerText(value: 0.0, origin: CGPoint(x: xCenter, y: yCenter + yOffset))
+        addSubview(centerText)
+        let rightText = createMarkerText(value: 300.0, origin: CGPoint(x: xCenter + 300.0, y: yCenter + yOffset))
+        addSubview(rightText)
+        
+        let tickOffset: CGFloat = -36.0
+        let tickHeight: CGFloat = 10.0
+        
+        let ticksLayer = CAShapeLayer()
+        let path = XPBezierPath()
+        
+        path.move(to: CGPoint(x: xCenter - 300.0, y: yCenter + tickOffset))
+        path.line(to: CGPoint(x: xCenter - 300.0, y: yCenter + tickOffset + tickHeight))
+        path.move(to: CGPoint(x: xCenter, y: yCenter + tickOffset))
+        path.line(to: CGPoint(x: xCenter, y: yCenter + tickOffset + tickHeight))
+        path.move(to: CGPoint(x: xCenter + 300.0, y: yCenter + tickOffset))
+        path.line(to: CGPoint(x: xCenter + 300.0, y: yCenter + tickOffset + tickHeight))
+
+        ticksLayer.path = path.cgPath
+        ticksLayer.lineWidth = 2.0
+        ticksLayer.strokeColor = NSColor.green.cgColor
+        
+        layer?.addSublayer(ticksLayer)
     }
     
     private func renderArt() {
-                
- 
-//        let path = XPBezierPath()
-//        path.move(to: CGPoint(x: 50, y: 200))
-//        path.curve(to: CGPoint(x: 200, y: 200),
-//                      controlPoint1: CGPoint(x: 80, y: 300),
-//                      controlPoint2: CGPoint(x: 150, y: 0))
-//
-//
-//
-//        //Shape Part
-//        let shape = CAShapeLayer()
-//        shape.path = path.cgPath
-//        shape.lineWidth = 4.0
-//        shape.fillColor = NSColor.clear.cgColor
-//        shape.strokeColor = NSColor.orange.cgColor
-//        rootLayer.addSublayer(shape)
-        
+
         let thermometerTip = CAShapeLayer()
         thermometerTip.path = XPBezierPath(
             roundedRect: NSRect(
-                origin: CGPoint(x: bounds.size.width / 2.0 - 380.0, y: frame.size.height / 2.0 - 6.0),
+                origin: CGPoint(x: xCenter - 300.0 - 80.0, y: yCenter - 16.0),
                 size: CGSize(width: 100.0, height: 12.0)
             ),
             cornerRadius: 8.0
@@ -56,7 +78,7 @@ class StageView: NSView {
         let thermometerBody = CAShapeLayer()
         thermometerBody.path = XPBezierPath(
             roundedRect: NSRect(
-                origin: CGPoint(x: bounds.size.width / 2.0 - 320.0, y: frame.size.height / 2.0 - 10.0),
+                origin: CGPoint(x: xCenter - 320.0, y: yCenter - 20.0),
                 size: CGSize(width: 640.0, height: 20.0)
             ),
             cornerRadius: 10.0
@@ -68,7 +90,7 @@ class StageView: NSView {
         let thermometerFill = CAShapeLayer()
         thermometerFill.path = XPBezierPath(
             rect: NSRect(
-                origin: CGPoint(x: bounds.size.width / 2.0 - 270.0 - 20.0, y: frame.size.height / 2.0 - 6.0),
+                origin: CGPoint(x: xCenter - 300.0, y: yCenter - 16.0),
                 size: CGSize(width: 40.0, height: 12.0)
             )
         ).cgPath
@@ -144,8 +166,8 @@ class StageView: NSView {
         
     private func renderTicks(ticks: [TapeMeasure.Tick]) {
         
-        let baseline = frame.size.height / 2.0 + 20.0
-        let center = frame.size.width / 2.0
+        let baseline = yCenter + 2.0
+        let center = xCenter
         
         let ticksLayer = CAShapeLayer()
         
@@ -203,6 +225,24 @@ class StageView: NSView {
     private func renderMarker(forTapeMeasure tapeMeasure: TapeMeasure, forPosition position: CGFloat, withAnchorValue anchorValue: Double, atAnchorPosition anchorPosition: CGFloat) {
         let value = tapeMeasure.value(atPosition: position, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
         print("value: \(value)")
+    }
+    
+    private func createMarkerText(value: Double, origin: CGPoint) -> NSTextView {
+        let textView = NSTextView(
+            frame: NSRect(
+                origin: CGPoint(x: origin.x - 40.0, y: origin.y),
+                size: CGSize(
+                    width: 80.0,
+                    height: 20.0
+                )
+            )
+        )
+        textView.font = NSFont.systemFont(ofSize: 14)
+        textView.alignment = .center
+        textView.textColor = .green
+        textView.backgroundColor = .black
+        textView.string = String(Int(value)) + "pt"
+        return textView
     }
     
 }
