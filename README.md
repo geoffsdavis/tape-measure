@@ -60,3 +60,9 @@ First, we'll create a basic thermometer:
 
 ![image](/images/tape_measure_1.png)
 
+---
+
+> **Note**
+> This is a note
+
+---
