@@ -10,13 +10,13 @@ The class that takes a few basic parameters, and can dynamically return an array
 
 * **Value** - The actual value of measurement at a given position. For instance, on a thermometer, the value at the position for boiling water would be 100ºC (212ºF)
 
-* **Origin** - The position, in graphical points, where the **value** is 0.0. Segment borders always align with this position.
+* **Origin** - The position, in graphical points, where the **value** is 0.0. By default, segment borders always align with this position.
 
 * **Segment** - A span covering a single subdivision. On a real-world tape measure, a segment might define a distance of 1 cm, or maybe 1 inch.
 
-* **Tick** - An optional subdivision of a segment.
+* **Tick** - Demarcations that define segments, as well as any subdivisions of segments. Put another way, a segment can be defined by one or more ticks.
 
-* **Tick Index** - The index of ticks within a segment (i.e. segment subdivisions). An index of 0 is at the segment's own "starting boundary"
+* **Tick Index** - The index of ticks that defines a segment's staring boundary, as well as any segment subdivision boundaries. An index of 0 represents the segment's own starting boundary. Indices of greater than 0 represent the segment's subdivision staring boundaries.
 
 ## Parameters
 
@@ -61,7 +61,7 @@ let segmentTickIndex: Int // zero-based index for determining which (if any) sub
 We create a simple Mac app, and render some primitive line art to draw a thermometer. The thermometer has a resolution-independent width of 600pt, extending from -300 across the center at 0 to 300 on the other end.
 
 > **Note**
-> Here we are using AppKit's NSViews and CoreAnimation's CALayers, but you could use any graphics framework of your choice.
+> Here we are using AppKit's NSView and CoreAnimation's CALayer, but you could use any graphics framework of your choice, on your platform(s) of choice.
 
 ![image](/images/tape_measure_1.png)
 
