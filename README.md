@@ -70,5 +70,20 @@ We create a simple Mac app, and render some primitive line art to draw a thermom
 ---
 **Step #1: Let's add some ticks**
 
+```
+        var tapeMeasure = TapeMeasure(
+            positionBounds: -300...300.0,
+            segmentValue: 10.0,
+            segmentLength: 60.0,
+            ticksPerSegment: 4,
+            direction: .ascending,
+            valueClippingBounds: nil,
+            valueOriginOffset: 0.0
+        )
+
+        var anchorValue: CGFloat = 0.0
+        var anchorPosition = tapeMeasure.startPosition
+```
+
 ![image](/images/tape_measure_1.png)
 ---
