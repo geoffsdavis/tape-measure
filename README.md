@@ -102,7 +102,25 @@ tapeMeasure.segmentValue = 36.0
 ```
 ![image](/images/tape_measure_2.png)
 ---
+**Step #3:
 
+---
+**Step #4:
+
+---
+**Step #5:
+
+---
+**Step #6:
+
+---
+**Step #7:
+
+---
+**Step #8:
+
+---
+**Step #9:
 
 
 
