@@ -59,7 +59,7 @@ let segmentTickIndex: Int // zero-based index for determining which (if any) sub
       
 ## Example: Let's Make a Thermometer
 
-**Step #0: Create a basic thermometer**
+### Step #0: Create a basic thermometer
 
 We create a simple Mac app, and render some primitive line art to draw a thermometer. The thermometer has a resolution-independent width of 600pt, extending from -300 across the center at 0 to 300 on the other end.
 
@@ -68,7 +68,7 @@ We create a simple Mac app, and render some primitive line art to draw a thermom
 
 ![image](/images/tape_measure_0.png)
 ---
-**Step #1: Let's add some ticks**
+### Step #1: Let's add some ticks
 
 ```
 var tapeMeasure = TapeMeasure(
