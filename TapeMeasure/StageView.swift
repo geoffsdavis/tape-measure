@@ -129,16 +129,16 @@ class StageView: NSView {
         // 5
         anchorValue = 32.0
 
-        // 7
+        // 6
         tapeMeasure.positionBounds = -260.0...260.0
 
-        // 8
+        // 7
         anchorPosition = tapeMeasure.startPosition
 
-        // 9
+        // 8
         tapeMeasure.segmentLength = 100.0
-        
-        // 10
+
+        // 9
         tapeMeasure = TapeMeasure(
             positionBounds: -300...300.0,
             segmentValue: 2.0,
