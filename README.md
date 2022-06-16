@@ -72,7 +72,7 @@ We create a simple Mac app, and render some primitive line art to draw a thermom
 
 ```
         var tapeMeasure = TapeMeasure(
-            positionBounds: -300...300.0,
+            positionBounds: -300.0...300.0,
             segmentValue: 10.0,
             segmentLength: 60.0,
             ticksPerSegment: 4,
@@ -84,6 +84,7 @@ We create a simple Mac app, and render some primitive line art to draw a thermom
         var anchorValue: CGFloat = 0.0
         var anchorPosition = tapeMeasure.startPosition
 ```
+We want this thermometer to be in Celsius, and go from 0ºC - 100ºC (freezing point of water to boiling point). We gave the positional bounds from one end of the thermometer to the other (`-300.0...300.0`). We defined segments as having a value of 10ºC, and if we do the math, that'll be 60pt distance per segment. We subdivide each segment into 4 ticks. The ticks will ascend in value, with no clipping by value bounds, and no offset of the origin.
 
 ![image](/images/tape_measure_1.png)
 ---
