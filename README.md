@@ -71,20 +71,26 @@ We create a simple Mac app, and render some primitive line art to draw a thermom
 **Step #1: Let's add some ticks**
 
 ```
-        var tapeMeasure = TapeMeasure(
-            positionBounds: -300.0...300.0,
-            segmentValue: 10.0,
-            segmentLength: 60.0,
-            ticksPerSegment: 4,
-            direction: .ascending,
-            valueClippingBounds: nil,
-            valueOriginOffset: 0.0
-        )
-
-        var anchorValue: CGFloat = 0.0
-        var anchorPosition = tapeMeasure.startPosition
+var tapeMeasure = TapeMeasure(
+    positionBounds: -300...300.0,
+    segmentValue: 10.0,
+    segmentLength: 60.0,
+    ticksPerSegment: 4,
+    direction: .ascending,
+    valueClippingBounds: nil,
+    valueOriginOffset: 0.0
+)
 ```
 We want this thermometer to be in Celsius, and go from 0ºC - 100ºC (freezing point of water to boiling point). We gave the positional bounds from one end of the thermometer to the other (`-300.0...300.0`). We defined segments as having a value of 10ºC, and if we do the math, that'll be 60pt distance per segment. We subdivide each segment into 4 ticks. The ticks will ascend in value, with no clipping by value bounds, and no offset of the origin.
+
+Okay, let's generate the data for the ticks:
+```
+var anchorValue: CGFloat = 0.0
+var anchorPosition = tapeMeasure.startPosition
+        
+let ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+```
+We establish an anchor value of 0ºC, at the starting position we already established. (-300pt). Then we call for the array of Tick structs, which we iterate over to add the text labels and artwork.
 
 ![image](/images/tape_measure_1.png)
 ---
