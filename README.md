@@ -66,10 +66,9 @@ We create a simple Mac app, and render some primitive line art to draw a thermom
 > **Note**
 > Here we are using AppKit's NSView and CoreAnimation's CALayer, but you could use any graphics framework of your choice, on your platform(s) of choice.
 
-![image](/images/tape_measure_1.png)
-
+![image](/images/tape_measure_0.png)
 ---
+**Step #1: Let's add some ticks**
 
-
-
+![image](/images/tape_measure_1.png)
 ---
