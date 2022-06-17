@@ -242,7 +242,6 @@ public class TapeMeasure {
 
 extension TapeMeasure {
     
-    
     public struct Tick {
         
         let position: CGFloat
@@ -260,8 +259,6 @@ extension TapeMeasure {
         
     }
     
-    
-    // @TODO: not yet implemented
     public enum Direction {
         case ascending
         case descending
