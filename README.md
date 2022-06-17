@@ -1,8 +1,8 @@
 # TapeMeasure
 
-**TapeMeasure** is a convenience class, written in Swift, for creating a data model to render a visual tape measure, or any other graphical elements that need to be laid out along an axis. It can dynamically re-generate that data, so that the tape measure can scrolled and/or scaled on the fly, due to animation or user interaction. 
+**TapeMeasure** is a convenience class, written in Swift, that acts as a view model for rendering a visual tape measure, or any other graphical elements that need to be laid out along an axis. It can dynamically re-generate that data, so that the tape measure can scrolled and/or scaled on the fly, due to animation or user interaction. 
 
-The class that takes a few basic parameters, and can dynamically return an array that represents the ticks of a tape measure, as well as other useful information. The class itself is stateless except for those parameters, and is independent of any UI frameworks. It can be used with **SwiftUI**, **UIKit**, **CoreAnimation**, **SpriteKit**, **SceneKit**, or any other graphics framework for MacOS or iOS.
+The class that takes a few basic parameters, and can dynamically return an array that represents the ticks of a tape measure, as well as other useful information. The class itself is stateless except for those parameters, and is independent of any graphics frameworks. It can be used with **SwiftUI**, **UIKit**, **CoreAnimation**, **SpriteKit**, **SceneKit**, or any other graphics framework for MacOS or iOS.
 
 ## Key Concepts
 
@@ -64,7 +64,7 @@ let segmentTickIndex: Int // zero-based index for determining which (if any) sub
 We create a simple Mac app, and render some primitive line art to draw a thermometer. The thermometer has a resolution-independent width of 600pt, extending from -300 across the center at 0 to 300 on the other end.
 
 > **Note**
-> Here we are using AppKit's NSView and CoreAnimation's CALayer, but you could use any graphics framework of your choice, on your platform(s) of choice.
+> Here we are using AppKit's NSView and CoreAnimation's CALayer, but you could use any graphics framework of your choice, on your Apple platform(s) of choice.
 
 ![image](/images/tape_measure_0.png)
 ---
@@ -93,6 +93,8 @@ var anchorPosition = tapeMeasure.startPosition
 // For all the changes listed below, we're going call this func every time for new ticks. 
 // We'll show it here the first time.
 var ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+
+// Now iterate through the 'ticks' array with your graphical framework...
 ```
 
 We establish an anchor value of 0ºC, at the starting position we already established. (-300pt). Then we call for the array of Tick structs, which we iterate over to add the text labels and artwork.
@@ -107,6 +109,11 @@ If we do some math, there's 180º between the freezing and boiling temperature. 
 
 ```
 tapeMeasure.segmentValue = 36.0
+
+// The last time this func call is shown, but you'll need to do it for every change in the steps below.
+var ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+
+// And redraw the ticks..
 ```
 
 ![image](/images/tape_measure_2.png)
@@ -137,10 +144,6 @@ Let's move 32º to the left positional boundary.
 
 ```
 anchorValue = 32.0 // New value. The old one was 0.0, for Celsius.
-
-// Remember, we're still calling this every time, but now the anchorValue has changed,
-// so we show it again here.
-ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
 ```
 
 ![image](/images/tape_measure_5.png)
@@ -157,10 +160,6 @@ tapeMeasure.positionBounds = -260.0...260.0
 
 ```
 anchorPosition = tapeMeasure.startPosition // updating to new value
-
-// As always, we make this call, now with the updated anchorPosition
-// (Or, we could just always pass 'tapeMeausre.startPosition' to `atAnchorPosition`)
-ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
 ```
 
 ![image](/images/tape_measure_7.png)
@@ -194,5 +193,32 @@ var ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anc
 ```
 
 ![image](/images/tape_measure_9.png)
+---
+### Step #10: Let's find the location of a "normal" temperature
 
+Supposedly, a "normal" temperature of a human body is 98.6ºF. We'll need to locate its graphical location on our thermometer.
 
+```
+let normalTemp: Double = 98.6
+let normalTempPosition = tapeMeasure.position(forValue: normalTemp, 
+                                         withAnchorValue: anchorValue, 
+                                         atAnchorPosition: anchorPosition
+                                       )
+
+print(normalTempPosition) // prints "-56.0"
+```
+
+![image](/images/tape_measure_10.png)
+---
+### Step #11: Guess what? I got a fever!
+
+I just took my temperature, and the mercury has risen to a position of 152.0pt. Let's find out the temperature.
+
+```
+let feverPosition: CGFloat = 152.0
+let feverValue = tapeMeasure.value(atPosition: feverPosition, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+
+print(feverValue) // prints "103.8"
+```
+
+![image](/images/tape_measure_11.png)
