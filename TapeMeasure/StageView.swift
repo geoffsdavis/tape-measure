@@ -19,6 +19,8 @@ class StageView: NSView {
         frame.size.height / 2.0
     }
     
+    var mercuryLayer: CAShapeLayer = CAShapeLayer()
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -27,7 +29,10 @@ class StageView: NSView {
         super.init(frame: frame)
         print("frame: \(frame)")
         layer = CALayer()
-        renderArt()
+        layer?.addSublayer(mercuryLayer)
+
+        renderThermometer()
+        renderMercury(toPosition: -240.0)
         createTicks()
         renderMarkers()
     }
@@ -61,7 +66,7 @@ class StageView: NSView {
         layer?.addSublayer(ticksLayer)
     }
     
-    private func renderArt() {
+    private func renderThermometer() {
 
         let thermometerTip = CAShapeLayer()
         thermometerTip.path = XPBezierPath(
@@ -86,20 +91,25 @@ class StageView: NSView {
         thermometerBody.fillColor = NSColor.lightGray.cgColor
         layer?.addSublayer(thermometerBody)
         
-        
-        let thermometerFill = CAShapeLayer()
-        thermometerFill.path = XPBezierPath(
-            rect: NSRect(
-                origin: CGPoint(x: xCenter - 300.0, y: yCenter - 16.0),
-                size: CGSize(width: 40.0, height: 12.0)
-            )
-        ).cgPath
-        thermometerFill.fillColor = NSColor.red.cgColor
-        layer?.addSublayer(thermometerFill)
-
-
     }
     
+    private func renderMercury(toPosition position: Double) {
+        
+        mercuryLayer.removeFromSuperlayer()
+        mercuryLayer = CAShapeLayer()
+        mercuryLayer.path = XPBezierPath(
+            rect: NSRect(
+                origin: CGPoint(x: xCenter - 300.0, y: yCenter - 16.0),
+                size: CGSize(width: position + 300, height: 12.0)
+            )
+        ).cgPath
+        mercuryLayer.fillColor = NSColor.red.cgColor
+        if let layer = layer, let sublayers = layer.sublayers {
+            layer.insertSublayer(mercuryLayer, at: UInt32(sublayers.count))
+        }
+
+    }
+
     
     private func createTicks() {
         
@@ -119,12 +129,12 @@ class StageView: NSView {
 
         // 2
         tapeMeasure.segmentValue = 36.0
-
+                
         // 3
-        tapeMeasure.valueClippingBounds = 32...212.0
+        tapeMeasure.valueOriginOffset = -4.0
 
         // 4
-        tapeMeasure.valueOriginOffset = -4.0
+        tapeMeasure.valueClippingBounds = 32...212.0
 
         // 5
         anchorValue = 32.0
@@ -150,16 +160,29 @@ class StageView: NSView {
         )
         anchorValue = 100.0
         anchorPosition = 0.0
-
-
+                
         let ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
-        
+                
         renderTicks(ticks: ticks)
-        
-        renderMarker(forTapeMeasure: tapeMeasure, forValue: 98.6, withAnchorValue: 100.0, atAnchorPosition: 0.0)
-        
-        renderMarker(forTapeMeasure: tapeMeasure, forPosition: 152.0, withAnchorValue: 100.0, atAnchorPosition: 0.0)
 
+                
+        // 10
+//        let normalTemp: Double = 98.6
+//        let normalTempPosition = tapeMeasure.position(forValue: normalTemp, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+//        
+//        renderMercury(toPosition: normalTempPosition)
+//        
+//        let indicator = renderIndicator(value: normalTemp, position: normalTempPosition)
+//        addSubview(indicator)
+                
+        // 11
+        let feverPosition: CGFloat = 152.0
+        let feverValue = tapeMeasure.value(atPosition: feverPosition, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+
+        renderMercury(toPosition: feverPosition)
+
+        let indicator = renderIndicator(value: feverValue, position: feverPosition)
+        addSubview(indicator)
         
     }
         
@@ -176,7 +199,7 @@ class StageView: NSView {
         var lineHeight = CGFloat.zero
         
         for tick in ticks {
-            tick.report()
+            //tick.report()
             switch tick.segmentTickIndex {
             case 0:
                 lineHeight = 20.0
@@ -214,19 +237,8 @@ class StageView: NSView {
         
         layer?.addSublayer(ticksLayer)
 
+    }
         
-    }
-    
-    private func renderMarker(forTapeMeasure tapeMeasure: TapeMeasure, forValue value: Double, withAnchorValue anchorValue: Double, atAnchorPosition anchorPosition: CGFloat) {
-        let position = tapeMeasure.position(forValue: value, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
-        print("position: \(position)")
-    }
-    
-    private func renderMarker(forTapeMeasure tapeMeasure: TapeMeasure, forPosition position: CGFloat, withAnchorValue anchorValue: Double, atAnchorPosition anchorPosition: CGFloat) {
-        let value = tapeMeasure.value(atPosition: position, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
-        print("value: \(value)")
-    }
-    
     private func createMarkerText(value: Double, origin: CGPoint) -> NSTextView {
         let textView = NSTextView(
             frame: NSRect(
@@ -243,6 +255,67 @@ class StageView: NSView {
         textView.backgroundColor = .black
         textView.string = String(Int(value)) + "pt"
         return textView
+    }
+    
+    private func renderIndicator(value: Double, position: CGFloat) -> NSView {
+        var origin = CGPoint(x: xCenter, y: yCenter)
+        origin.x += position
+
+        let indicatorView = NSView()
+        indicatorView.layer = CALayer()
+        indicatorView.frame = NSRect(
+            origin: CGPoint(x: origin.x - 40.0, y: origin.y + 8.0),
+            size: CGSize(
+                width: 80.0,
+                height: 50.0
+            )
+        )
+        
+        let textView = NSTextView(
+            frame: NSRect(
+                origin: CGPoint(x: 0.0, y: 12.0),
+                size: CGSize(
+                    width: 80.0,
+                    height: 30.0
+                )
+            )
+        )
+        textView.font = NSFont.systemFont(ofSize: 20)
+        textView.alignment = .center
+        textView.textColor = .yellow
+        textView.backgroundColor = .clear
+        textView.string = String(value.roundToDecimal(1)) + "º"
+        
+        indicatorView.addSubview(textView)
+        
+        let indicatorBackground = CAShapeLayer()
+        indicatorBackground.path = XPBezierPath(
+            roundedRect: NSRect(
+                origin: CGPoint(x: 6.0, y: 16.0),
+                size: CGSize(width: 80.0 - 12.0, height: 40.0 - 12.0)
+            ),
+            cornerRadius: 6.0
+        ).cgPath
+        indicatorBackground.lineWidth = 2.0
+        indicatorBackground.strokeColor = NSColor.yellow.cgColor
+        indicatorBackground.fillColor = NSColor.black.cgColor
+
+        indicatorView.layer?.addSublayer(indicatorBackground)
+        
+        let arrow = CAShapeLayer()
+        let path = XPBezierPath()
+        
+        path.move(to: CGPoint(x: 40.0, y: 0.0))
+        path.line(to: CGPoint(x: 40.0 - 10.0, y: 15.0))
+        path.line(to: CGPoint(x: 40.0 + 10.0, y: 15.0))
+        path.line(to: CGPoint(x: 40.0, y: 0.0))
+        arrow.path = path.cgPath
+        
+        arrow.fillColor = NSColor.yellow.cgColor
+        
+        indicatorView.layer?.addSublayer(arrow)
+        
+        return indicatorView
     }
     
 }
