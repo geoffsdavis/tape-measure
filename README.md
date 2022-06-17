@@ -200,12 +200,12 @@ Supposedly, the "normal" temperature of a human body is 98.6ºF. We'll need to l
 
 ```
 let normalTemp: Double = 98.6
-let normalTempPosition = tapeMeasure.position(forValue: normalTemp, 
-                                         withAnchorValue: anchorValue, 
-                                         atAnchorPosition: anchorPosition
-                                       )
+let normalPosition = tapeMeasure.position(forValue: normalTemp, 
+                                             withAnchorValue: anchorValue, 
+                                             atAnchorPosition: anchorPosition
+                                           )
 
-print(normalTempPosition) // prints "-56.0"
+print(normalPosition) // prints "-56.0"
 ```
 
 ![image](/images/tape_measure_10.png)
