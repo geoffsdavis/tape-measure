@@ -168,11 +168,11 @@ class StageView: NSView {
                 
         // 10
 //        let normalTemp: Double = 98.6
-//        let normalTempPosition = tapeMeasure.position(forValue: normalTemp, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
-//        
-//        renderMercury(toPosition: normalTempPosition)
-//        
-//        let indicator = renderIndicator(value: normalTemp, position: normalTempPosition)
+//        let normalPosition = tapeMeasure.position(forValue: normalTemp, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+//
+//        renderMercury(toPosition: normalPosition)
+//
+//        let indicator = renderIndicator(value: normalTemp, position: normalPosition)
 //        addSubview(indicator)
                 
         // 11
