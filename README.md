@@ -81,15 +81,19 @@ var tapeMeasure = TapeMeasure(
     valueOriginOffset: 0.0
 )
 ```
+
 We want this thermometer to be in Celsius, and go from 0ºC - 100ºC (freezing point of water to boiling point). We gave the positional bounds from one end of the thermometer to the other (`-300.0...300.0`). We defined segments as having a value of 10ºC, and if we do the math, that'll be 60pt distance per segment. We subdivide each segment into 4 ticks. The ticks will ascend in value, with no clipping by value bounds, and no offset of the origin.
 
 Okay, let's generate the data for the ticks:
+
 ```
 var anchorValue: CGFloat = 0.0
 var anchorPosition = tapeMeasure.startPosition
         
+// For all the changes listed below, we're going call this func every time for new ticks. We'll show it here.
 let ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
 ```
+
 We establish an anchor value of 0ºC, at the starting position we already established. (-300pt). Then we call for the array of Tick structs, which we iterate over to add the text labels and artwork.
 
 ![image](/images/tape_measure_1.png)
@@ -97,36 +101,93 @@ We establish an anchor value of 0ºC, at the starting position we already establ
 ### Step #2: Let's make life difficult and switch to Fahrenheit
 
 As part of the metric system, Celsius makes too much sense. Let's switch to Fahrenheit, based on the British Imperial system of measurements, which even the British had the good sense to abandon. With Fahrenheit, water freezes at 32ºF, and boils at 212ºF. Let's start making changes. We'll change the value of each segment to 36ºF.
+
+If we do some math, there's 180º between the freezing and boiling temperature. Let's chop that up into 5 segments, which would be 36º each. 
+
 ```
 tapeMeasure.segmentValue = 36.0
 ```
+
 ![image](/images/tape_measure_2.png)
 ---
-### Step #3:
+### Step #3: Ohhh, we'll need a value offset
+
+The degrees have scaled nicely, but we need to put in an offset to make the segment ticks line up nicely with 32º and 212º. Since the nearest tick to 32º is 36º, let's set a value offset of -4.
+
+```
+tapeMeasure.valueOriginOffset = -4.0
+```
 
 ![image](/images/tape_measure_3.png)
 ---
-### Step #4:
+### Step #4: Let's get rid of the extra degrees
+
+Now we have ticks at both 32º and 212º, but the degrees are running above 212º. Let's clip the values.
+
+```
+tapeMeasure.valueClippingBounds = 32...212.0
+```
 
 ![image](/images/tape_measure_4.png)
 ---
-### Step #5:
+### Step #5: And move the freezing point to the left end
+
+Let's move 32º to the left positional boundary.
+
+```
+anchorPosition = tapeMeasure.startPosition // this is the same as before
+anchorValue = 32.0 // but this has changed
+
+// Remember, we're still calling this every time, but now the anchorValue has changed.
+let ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+```
 
 ![image](/images/tape_measure_5.png)
 ---
-### Step #6:
+### Step #6: Hmmmm, let's move the positional boundaries inward
+
+```
+tapeMeasure.positionBounds = -260.0...260.0
+```
 
 ![image](/images/tape_measure_6.png)
 ---
-### Step #7:
+### Step #7: Oops, we'll need to update the anchor position 
+
+```
+anchorPosition = tapeMeasure.startPosition // updating to new value
+
+// As always, we make this call, now with the updated anchorPosition
+let ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+```
 
 ![image](/images/tape_measure_7.png)
 ---
-### Step #8:
+### Step #8: Let's scale it out a little more
+
+```
+tapeMeasure.segmentLength = 100.0
+```
 
 ![image](/images/tape_measure_8.png)
 ---
-### Step #9:
+### Okay, now we'll just create a new thermometer from scratch, for human temperatures.
+
+Here, we'll just set all the parameters properly on initialization. By now, you should be able to see what's going on.
+
+```
+tapeMeasure = TapeMeasure(
+    positionBounds: -300...300.0,
+    segmentValue: 2.0,
+    segmentLength: 80.0,
+    ticksPerSegment: 4,
+    direction: .ascending,
+    valueClippingBounds: 94.0...106.0,
+    valueOriginOffset: 0.0
+)
+anchorValue = 100.0
+anchorPosition = 0.0
+```
 
 ![image](/images/tape_measure_9.png)
 
