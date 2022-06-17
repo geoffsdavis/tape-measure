@@ -196,7 +196,7 @@ var ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anc
 ---
 ### Step #10: Let's find the location of a "normal" temperature
 
-Supposedly, a "normal" temperature of a human body is 98.6ºF. We'll need to locate its graphical location on our thermometer.
+Supposedly, the "normal" temperature of a human body is 98.6ºF. We'll need to locate its graphical location on our thermometer.
 
 ```
 let normalTemp: Double = 98.6
@@ -216,7 +216,10 @@ I just took my temperature, and the mercury has risen to a position of 152.0pt. 
 
 ```
 let feverPosition: CGFloat = 152.0
-let feverValue = tapeMeasure.value(atPosition: feverPosition, withAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+let feverValue = tapeMeasure.value(atPosition: feverPosition, 
+                                        withAnchorValue: anchorValue, 
+                                        atAnchorPosition: anchorPosition
+                                      )
 
 print(feverValue) // prints "103.8"
 ```
