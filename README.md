@@ -71,7 +71,7 @@ We create a simple Mac app, and render some primitive line art to draw a thermom
 ### Step #1: Let's add some ticks
 
 ```
-var tapeMeasure = TapeMeasure(
+let tapeMeasure = TapeMeasure(
     positionBounds: -300...300.0,
     segmentValue: 10.0,
     segmentLength: 60.0,
@@ -90,8 +90,9 @@ Okay, let's generate the data for the ticks:
 var anchorValue: CGFloat = 0.0
 var anchorPosition = tapeMeasure.startPosition
         
-// For all the changes listed below, we're going call this func every time for new ticks. We'll show it here.
-let ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+// For all the changes listed below, we're going call this func every time for new ticks. 
+// We'll show it here the first time.
+var ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
 ```
 
 We establish an anchor value of 0ºC, at the starting position we already established. (-300pt). Then we call for the array of Tick structs, which we iterate over to add the text labels and artwork.
@@ -100,9 +101,9 @@ We establish an anchor value of 0ºC, at the starting position we already establ
 ---
 ### Step #2: Let's make life difficult and switch to Fahrenheit
 
-As part of the metric system, Celsius makes too much sense. Let's switch to Fahrenheit, based on the British Imperial system of measurements, which even the British had the good sense to abandon. With Fahrenheit, water freezes at 32ºF, and boils at 212ºF. Let's start making changes. We'll change the value of each segment to 36ºF.
+As part of the metric system, Celsius makes too much sense. Let's switch to Fahrenheit, based on the British Imperial system of measurements, which even the British had the good sense to abandon. With Fahrenheit, water freezes at 32ºF, and boils at 212ºF. Since Fahrenheit degrees are smaller, we'll need to increase the value (number of degrees) packed into segments. 
 
-If we do some math, there's 180º between the freezing and boiling temperature. Let's chop that up into 5 segments, which would be 36º each. 
+If we do some math, there's 180º between the freezing and boiling temperature. Let's chop that up into 5 segments, which would be 36º each. We'll change the value of each segment to 36ºF.
 
 ```
 tapeMeasure.segmentValue = 36.0
@@ -112,7 +113,7 @@ tapeMeasure.segmentValue = 36.0
 ---
 ### Step #3: Ohhh, we'll need a value offset
 
-The degrees have scaled nicely, but we need to put in an offset to make the segment ticks line up nicely with 32º and 212º. Since the nearest tick to 32º is 36º, let's set a value offset of -4.
+The degrees have scaled nicely, but we need to put in an offset to make the segment ticks line up perfectly with 32º and 212º. Since the nearest tick to 32º is 36º, let's set a value offset of -4 to nudge everything over.
 
 ```
 tapeMeasure.valueOriginOffset = -4.0
@@ -122,7 +123,7 @@ tapeMeasure.valueOriginOffset = -4.0
 ---
 ### Step #4: Let's get rid of the extra degrees
 
-Now we have ticks at both 32º and 212º, but the degrees are running above 212º. Let's clip the values.
+Now we have ticks at both 32º and 212º, but also extra degrees to both the left and right. Let's clip the values.
 
 ```
 tapeMeasure.valueClippingBounds = 32...212.0
@@ -135,16 +136,16 @@ tapeMeasure.valueClippingBounds = 32...212.0
 Let's move 32º to the left positional boundary.
 
 ```
-anchorPosition = tapeMeasure.startPosition // this is the same as before
-anchorValue = 32.0 // but this has changed
+anchorValue = 32.0 // New value. The old one was 0.0, for Celsius.
 
-// Remember, we're still calling this every time, but now the anchorValue has changed.
-let ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+// Remember, we're still calling this every time, but now the anchorValue has changed,
+// so we show it again here.
+ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
 ```
 
 ![image](/images/tape_measure_5.png)
 ---
-### Step #6: Hmmmm, let's move the positional boundaries inward
+### Step #6: Hmmmm, let's move the positional boundaries inward for visual padding
 
 ```
 tapeMeasure.positionBounds = -260.0...260.0
@@ -158,12 +159,13 @@ tapeMeasure.positionBounds = -260.0...260.0
 anchorPosition = tapeMeasure.startPosition // updating to new value
 
 // As always, we make this call, now with the updated anchorPosition
-let ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+// (Or, we could just always pass 'tapeMeausre.startPosition' to `atAnchorPosition`)
+ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
 ```
 
 ![image](/images/tape_measure_7.png)
 ---
-### Step #8: Let's scale it out a little more
+### Step #8: Let's stretch things out to fill up the space
 
 ```
 tapeMeasure.segmentLength = 100.0
@@ -171,12 +173,12 @@ tapeMeasure.segmentLength = 100.0
 
 ![image](/images/tape_measure_8.png)
 ---
-### Okay, now we'll just create a new thermometer from scratch, for human temperatures.
+### Step #9: Okay, now we'll just create a new thermometer from scratch, for human temperatures
 
 Here, we'll just set all the parameters properly on initialization. By now, you should be able to see what's going on.
 
 ```
-tapeMeasure = TapeMeasure(
+let tapeMeasure = TapeMeasure(
     positionBounds: -300...300.0,
     segmentValue: 2.0,
     segmentLength: 80.0,
@@ -185,8 +187,10 @@ tapeMeasure = TapeMeasure(
     valueClippingBounds: 94.0...106.0,
     valueOriginOffset: 0.0
 )
-anchorValue = 100.0
-anchorPosition = 0.0
+let anchorValue = 100.0
+let anchorPosition = 0.0
+
+var ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
 ```
 
 ![image](/images/tape_measure_9.png)
