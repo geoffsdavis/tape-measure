@@ -2,9 +2,16 @@
 
 **TapeMeasure** is a convenience class, written in Swift, that acts as a view model for rendering a visual tape measure, or any other graphical elements that need to be laid out along an axis. It can dynamically re-generate that data, so that the tape measure can scrolled and/or scaled on the fly, due to animation or user interaction. 
 
-**Examples**
-| --- | --- | --- |
-| COL 1 | COL 2 | COL 3 |
+<table>
+  <tr>
+    <td>Examples</td>
+  </tr>
+  <tr>
+    <td>![image](/images/time_decay_measure.png)</td>
+    <td>Three</td>
+    <td>Three</td>
+  </tr>
+</table>
 
 The class that takes a few basic parameters, and can dynamically return an array that represents the ticks of a tape measure, as well as other useful information. The class itself is stateless except for those parameters, and is independent of any graphics frameworks. It can be used with **SwiftUI**, **UIKit**, **CoreAnimation**, **SpriteKit**, **SceneKit**, or any other graphics framework for MacOS or iOS.
 
