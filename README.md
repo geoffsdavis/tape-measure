@@ -14,7 +14,7 @@
   <tr>
     <td>Works for vertical too</td>
     <td>Guess what? I got a fever!</td>
-    <td>Dates are fun (backed by timestamps)</td>
+    <td>Dates are fun<br>(backed by timestamps)</td>
   </tr>
 </table>
 
