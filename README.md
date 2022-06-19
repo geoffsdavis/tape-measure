@@ -44,7 +44,8 @@ The class that takes a few basic parameters, and can dynamically return an array
 
 TapeMeasure takes some initial parameters on instantiation, all of which can be mutated at any time.
 
-* `positionBounds: ClosedRange<CGFloat>` Graphical position boundaries inside which TapeMeasure.Ticks will be generated. Ticks will only have positions within these boundaries. For convenience, pass in the boundaries which match the layout in the intended view. The returned Tick positions will match nicely.
+* **`positionBounds: ClosedRange<CGFloat>`** 
+Graphical position boundaries inside which TapeMeasure.Ticks will be generated. Ticks will only have positions within these boundaries. For convenience, pass in the boundaries which match the layout in the intended view. The returned Tick positions will match nicely.
 
 * `direction: Direction` Enum describing whether the Ticks are `.ascending` or `.descending` in value, within the supplied positionBounds
 
