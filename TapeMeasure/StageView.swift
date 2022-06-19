@@ -27,7 +27,7 @@ class StageView: NSView {
     
     public override init(frame: NSRect) {
         super.init(frame: frame)
-        print("frame: \(frame)")
+
         layer = CALayer()
         layer?.addSublayer(mercuryLayer)
 
