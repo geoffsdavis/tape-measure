@@ -8,7 +8,7 @@
   </tr>
   <tr>
     <td><img src="images/iv_measure.png"></td>
-    <td><img src="images/tape_measure_9.png"</td>
+    <td><img src="images/thermometer.png"</td>
     <td><img src="images/time_decay_measure.png"></td>
   </tr>
 </table>
