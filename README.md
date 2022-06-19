@@ -7,7 +7,7 @@
     <td>Examples</td>
   </tr>
   <tr>
-    <td><img src="images/time_decay_measure.png" width="120" height="267"</td>
+    <td><img src="images/time_decay_measure.png" width="90" height="200"</td>
     <td>Three</td>
     <td>Three</td>
   </tr>
