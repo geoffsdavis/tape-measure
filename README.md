@@ -4,7 +4,7 @@
 
 <table>
   <tr>
-    <td>Examples</td>
+    <td colspan="3">Examples</td>
   </tr>
   <tr>
     <td><img src="images/iv_measure.png"></td>
