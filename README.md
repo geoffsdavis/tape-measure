@@ -7,9 +7,9 @@
     <td>Examples</td>
   </tr>
   <tr>
-    <td><img src="images/time_decay_measure.png" width="90" height="200"</td>
+    <td><img src="images/iv_measure.png"></td>
     <td>Three</td>
-    <td>Three</td>
+    <td><img src="images/time_decay_measure.png"></td>
   </tr>
 </table>
 
