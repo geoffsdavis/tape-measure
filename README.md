@@ -1,15 +1,21 @@
 # TapeMeasure
 
-**TapeMeasure** is a convenience class, written in Swift, that acts as a view model for rendering a visual tape measure, or any other graphical elements that need to be laid out along an axis. It can dynamically re-generate that data, so that the tape measure can scrolled and/or scaled on the fly, due to animation or user interaction. 
+**TapeMeasure** is a convenience class, written in Swift, that acts as a **view model** for rendering a visual tape measure, or any other graphical elements that need layout in a measured sequence. It can dynamically re-generate that data, so that the tape measure can be scrolled and/or scaled on the fly, due to animation or user interaction. 
 
 <table>
   <tr>
     <td colspan="3">Examples</td>
   </tr>
   <tr>
-    <td><img src="images/iv_measure.png"></td>
+    <td rowspan="3"><img src="images/iv_measure.png"></td>
     <td><img src="images/thermometer.png"></td>
-    <td><img src="images/time_decay_measure.png"></td>
+    <td rowspan="3"><img src="images/time_decay_measure.png"></td>
+  </tr>
+  <tr>
+    <td>"Guess what? I got a fever!"</td>
+  </tr>
+  <tr>
+    <td>Examples</td>
   </tr>
   <tr>
     <td>Works for vertical too</td>
@@ -22,9 +28,9 @@ The class that takes a few basic parameters, and can dynamically return an array
 
 ## Key Concepts
 
-* **Position** - A given "physical" (graphical) position on the tape measure. For instance, on a thermometer, the position for boiling water might at 300 graphical points from the position of the thermometer's origin
+* **Position** - A given "physical" (graphical) position on the tape measure. For instance, on a thermometer, the position for boiling water might at 300 graphical points.
 
-* **Value** - The actual value of measurement at a given position. For instance, on a thermometer, the value at the position for boiling water would be 100ºC (212ºF)
+* **Value** - The actual value of measurement at a given position. For instance, on a thermometer, the value at the position for boiling water would be 100ºC (212ºF).
 
 * **Origin** - The position, in graphical points, where the **value** is 0.0. By default, segment borders always align with this position.
 
@@ -32,32 +38,26 @@ The class that takes a few basic parameters, and can dynamically return an array
 
 * **Tick** - Demarcations that define segments, as well as any subdivisions of segments. Put another way, a segment can be defined by one or more ticks.
 
-* **Tick Index** - The index of ticks that defines a segment's staring boundary, as well as any segment subdivision boundaries. An index of 0 represents the segment's own starting boundary. Indices of greater than 0 represent the segment's subdivision staring boundaries.
+* **Tick Index** - The index of ticks that defines a segment's starting boundary, as well as any segment subdivision boundaries. An index of 0 represents the segment's own starting boundary. Indices of greater than 0 represent the segment's subdivision staring boundaries.
 
 ## Parameters
 
 TapeMeasure takes some initial parameters on instantiation, all of which can be mutated at any time.
 
-The positional boundaries in which TapeMeasure Ticks will be generated. Ticks will only have positions within these boundaries. For convenience, pass in the boundaries which match the layout in the intended view. The returned Tick positions will match nicely.
-* `positionBounds: ClosedRange<CGFloat>`
+* `positionBounds: ClosedRange<CGFloat>` Graphical position boundaries inside which TapeMeasure.Ticks will be generated. Ticks will only have positions within these boundaries. For convenience, pass in the boundaries which match the layout in the intended view. The returned Tick positions will match nicely.
 
-Enum describing whether the Ticks are `.ascending` or `.descending` in value, within the supplied `positionBounds`
-* `direction: Direction`
+* `direction: Direction` Enum describing whether the Ticks are `.ascending` or `.descending` in value, within the supplied positionBounds
 
-The value per segment. This would be the value scale of the tape measure.
-* `segmentValue: Double`
+* `segmentValue: Double` The value per segment. This would be the value scale of the tape measure.
 
-The "physical" length of a single segment, in graphical points. This would be the visual scale of the tape measure
-* `segmentDistance: CGFloat`
+* `segmentDistance: CGFloat` The graphical length of a single segment, in graphical points. This would be the visual scale of the tape measure
 
-A value of 1 would indicated each segment is defined by a single tick, whereas greater than 1 would indicate a segment sub-divided into that many ticks
-* `ticksPerSegment: Int`
+* `ticksPerSegment: Int` A value of 1 would indicated each segment is defined by a single tick, whereas greater than 1 would indicate a segment sub-divided into that many ticks
 
-This optional parameter clips a tape measure by value, **NOT** position. For instance, in a scrolling tape measure, if you don't want any ticks rendered below a **value** of 0.0, but also don't want to set any upper value bound, you would pass in a closed range of `0.0...Double.greatestFiniteMagnitude`. This is nil by default, to indicate no value clipping bounds.
-* `valueClippingBounds: ClosedRange<Double>? = nil`
+* `valueClippingBounds: ClosedRange<Double>? = nil` This optional parameter clips a tape measure by value, **NOT** position. For instance, in a scrolling tape measure, if you don't want any ticks rendered below a **value** of 0.0, but also don't want to set any upper value bound, you would pass in a closed range of `0.0...Double.greatestFiniteMagnitude`. This is nil by default, to indicate no value clipping bounds.
 
-An offset by **position** (graphical points) of the **origin** (location representing the **value** of 0.0), from the **position** of 0.0 pts. This might be useful to stagger the ticks so they don't neatly line up with segments, which span a graphical distance but define units of **value**. We'll see an example below. This is zero by default, to indicate no offset, so that the **value** of 0.0 would be at the **position** of 0.0 pts.
-* `valueOriginOffset: Double = 0.0`
+* `valueOriginOffset: Double = 0.0` An offset by **position** (graphical points) of the **origin** (location representing the **value** of 0.0), from the **position** of 0.0 pts. This might be useful to stagger the ticks so they don't neatly line up with segments, which span a graphical distance but define units of **value**. We'll see an example below. This is zero by default, to indicate no offset, so that the **value** of 0.0 would be at the **position** of 0.0 pts.
+
 
 ## Output
 
@@ -108,6 +108,7 @@ var anchorPosition = tapeMeasure.startPosition
         
 // For all the changes listed below, we're going call this func every time for new ticks. 
 // We'll show it here the first time.
+
 var ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
 
 // Now iterate through the 'ticks' array with your graphical framework...
