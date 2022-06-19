@@ -44,20 +44,21 @@ The class that takes a few basic parameters, and can dynamically return an array
 
 TapeMeasure takes some initial parameters on instantiation, all of which can be mutated at any time.
 
-* **`positionBounds: ClosedRange<CGFloat>`** 
-Graphical position boundaries inside which TapeMeasure.Ticks will be generated. Ticks will only have positions within these boundaries. For convenience, pass in the boundaries which match the layout in the intended view. The returned Tick positions will match nicely.
+* **`positionBounds: ClosedRange<CGFloat>`** Graphical position boundaries inside which TapeMeasure.Ticks will be generated. Ticks will only have positions within these boundaries. For convenience, pass in the boundaries which match the layout in the intended view. The returned Tick positions will match nicely.
 
-* `direction: Direction` Enum describing whether the Ticks are `.ascending` or `.descending` in value, within the supplied positionBounds
+* **`direction: Direction`** Enum describing whether the Ticks are `.ascending` or `.descending` in value, within the supplied positionBounds
 
-* `segmentValue: Double` The value per segment. This would be the value scale of the tape measure.
+* **`segmentValue: Double`** The value per segment. This would be the value scale of the tape measure.
 
-* `segmentDistance: CGFloat` The graphical length of a single segment, in graphical points. This would be the visual scale of the tape measure
+* **`segmentDistance: CGFloat`** The graphical length of a single segment, in graphical points. This would be the visual scale of the tape measure.
 
-* `ticksPerSegment: Int` A value of 1 would indicated each segment is defined by a single tick, whereas greater than 1 would indicate a segment sub-divided into that many ticks
+* **`ticksPerSegment: Int`** A value of 1 would indicated each segment is defined by a single tick, whereas greater than 1 would indicate a segment sub-divided into that many ticks.
 
-* `valueClippingBounds: ClosedRange<Double>? = nil` This optional parameter clips a tape measure by value, **NOT** position. For instance, in a scrolling tape measure, if you don't want any ticks rendered below a **value** of 0.0, but also don't want to set any upper value bound, you would pass in a closed range of `0.0...Double.greatestFiniteMagnitude`. This is nil by default, to indicate no value clipping bounds.
+* **`valueClippingBounds: ClosedRange<Double>? = nil`** This optional parameter clips a tape measure by value, **NOT** position. For instance, in a scrolling tape measure, if you don't want any ticks rendered below a **value** of 0.0, but also don't want to set any upper value bound, you would pass in a closed range of `0.0...Double.greatestFiniteMagnitude`. This is nil by default, to indicate no value clipping bounds.
 
-* `valueOriginOffset: Double = 0.0` An offset by **position** (graphical points) of the **origin** (location representing the **value** of 0.0), from the **position** of 0.0 pts. This might be useful to stagger the ticks so they don't neatly line up with segments, which span a graphical distance but define units of **value**. We'll see an example below. This is zero by default, to indicate no offset, so that the **value** of 0.0 would be at the **position** of 0.0 pts.
+* **`valueOriginOffset: Double = 0.0`** An offset by **position** (graphical points) of the **origin** (location representing the **value** of 0.0), from the **position** of 0.0 pts. This might be useful to stagger the ticks so they don't neatly line up with segments, which span a graphical distance but define units of **value**. We'll see an example below. This is zero by default, to indicate no offset, so that the **value** of 0.0 would be at the **position** of 0.0 pts.
+
+* **`public var tickAlignmentEpsilon: CGFloat = 0.001`** Special property that provides a "fudge factor" for dealing with floating point math precision issues. TapeMeasure when determining if ticks line up perfectly with origins or fall with given boundaries. Likely you won't have to change this, but if you're dealing with very small fractional values, for instance, change this property to adjust the precision up or down, if needed.
 
 
 ## Output
