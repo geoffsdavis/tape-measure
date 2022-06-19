@@ -8,8 +8,13 @@
   </tr>
   <tr>
     <td><img src="images/iv_measure.png"></td>
-    <td><img src="images/thermometer.png"</td>
+    <td><img src="images/thermometer.png"></td>
     <td><img src="images/time_decay_measure.png"></td>
+  </tr>
+  <tr>
+    <td>Works for vertical too</td>
+    <td>Guess what? I got a fever!</td>
+    <td>Dates are fun (backed by timestamps)</td>
   </tr>
 </table>
 
