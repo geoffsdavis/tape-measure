@@ -10,7 +10,7 @@ import Cocoa
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     enum Constants {
-        static let appSize = NSSize(width: 840.0, height: 120.0)
+        static let appSize = NSSize(width: 840.0, height: 180.0)
     }
     
     func loopPrintTicks(_ ticks: [TapeMeasure.Tick], forTapeMeasure tapeMeasure: TapeMeasure) {

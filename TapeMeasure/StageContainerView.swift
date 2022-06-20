@@ -18,7 +18,7 @@ struct StageContainerView: NSViewRepresentable {
     func makeNSView(context: Context) -> NSView {
         
         let frame = NSRect(origin: .zero, size: AppDelegate.Constants.appSize)
-        let view = ThermometerView(frame: frame)
+        let view = AmpView(frame: frame)
         return view
 
     }
