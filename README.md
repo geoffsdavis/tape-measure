@@ -4,7 +4,7 @@
 
 <table>
   <tr>
-    <td colspan="3">Examples</td>
+    <td colspan="3"><b>EXAMPLES<b></td>
   </tr>
   <tr>
     <td rowspan="3"><img src="images/iv_measure.png"></td>
@@ -12,15 +12,15 @@
     <td rowspan="3"><img src="images/time_decay_measure.png"></td>
   </tr>
   <tr>
-    <td>"Guess what? I got a fever!"</td>
+    <td><b>"Guess what? I got a fever!"</b></td>
   </tr>
   <tr>
     <td><img src="images/amp.png"></td>
   </tr>
   <tr>
-    <td>Works for vertical too</td>
-    <td>"What we do is, if we need that extra push over the cliff...you know what we do?"</td>
-    <td>Dates are fun<br>(backed by timestamps)</td>
+    <td><b>Works for vertical too</b></td>
+    <td><b>"What we do is, if we need that extra push over the cliff...you know what we do?"</b></td>
+    <td><b>Dates are fun<br>(backed by timestamps)</b></td>
   </tr>
 </table>
 
