@@ -1,5 +1,5 @@
 //
-//  StageView.swift
+//  StageContainerView.swift
 //  TapeMeasure
 //
 //  Created by Geoff Davis on 6/8/22.
@@ -18,7 +18,7 @@ struct StageContainerView: NSViewRepresentable {
     func makeNSView(context: Context) -> NSView {
         
         let frame = NSRect(origin: .zero, size: AppDelegate.Constants.appSize)
-        let view = StageView(frame: frame)
+        let view = ThermometerView(frame: frame)
         return view
 
     }

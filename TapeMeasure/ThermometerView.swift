@@ -1,5 +1,5 @@
 //
-//  StageView.swift
+//  ThermometerView.swift
 //  TapeMeasure
 //
 //  Created by Geoff Davis on 6/8/22.
@@ -9,7 +9,7 @@ import Foundation
 import AppKit
 
 
-class StageView: NSView {
+class ThermometerView: NSView {
     
     var xCenter: CGFloat {
         frame.size.width / 2.0
