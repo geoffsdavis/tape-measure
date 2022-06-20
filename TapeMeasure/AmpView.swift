@@ -14,7 +14,7 @@ class AmpView: NSView {
     enum Constants {
         static let labels = ["PRESENCE", "BASS", "MIDDLE", "TREBLE", "VOLUME I"]
         static let settings = [7.2, 5.1, 10.0, 10.0, 10.0]
-        static let labelColor = NSColor(red: 0.35, green: 0.2, blue: 0.05, alpha: 1.0)
+        static let labelColor = NSColor.black // NSColor(red: 0.35, green: 0.2, blue: 0.05, alpha: 1.0)
         static let dialPositions = [-320.0, -160.0, 0.0, 160.0, 320.0]
     }
     
@@ -156,7 +156,7 @@ class AmpView: NSView {
         for i in 0..<Constants.labels.count {
             let dialView = dialLabelViews[i]
             let tickLayer = CAShapeLayer()
-            tickLayer.strokeColor = NSColor.brown.cgColor
+            tickLayer.strokeColor = NSColor.black.cgColor
             tickLayer.lineWidth = 2.0
             let path = XPBezierPath()
             for tick in ticks {
