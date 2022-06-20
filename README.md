@@ -7,21 +7,22 @@
     <td colspan="3"><b>EXAMPLES<b></td>
   </tr>
   <tr>
+    <td><b>Works for vertical too</b></td>
+    <td><b>"Guess what? I got a fever!"</b></td>
+    <td><b>Dates are fun<br>(backed by timestamps)</b></td>
+  </tr>
+  <tr>
     <td rowspan="3"><img src="images/iv_measure.png"></td>
     <td><img src="images/thermometer.png"></td>
     <td rowspan="3"><img src="images/time_decay_measure.png"></td>
   </tr>
   <tr>
-    <td><b>"Guess what? I got a fever!"</b></td>
+    <td><b>"What we do is, if we need that extra push over the cliff...you know what we do?"</b></td>
   </tr>
   <tr>
     <td><img src="images/amp.png"></td>
   </tr>
-  <tr>
-    <td><b>Works for vertical too</b></td>
-    <td><b>"What we do is, if we need that extra push over the cliff...you know what we do?"</b></td>
-    <td><b>Dates are fun<br>(backed by timestamps)</b></td>
-  </tr>
+
 </table>
 
 The class that takes a few basic parameters, and can dynamically return an array that represents the ticks of a tape measure, as well as other useful information. The class itself is stateless except for those parameters, and is independent of any graphics frameworks. It can be used with **SwiftUI**, **UIKit**, **CoreAnimation**, **SpriteKit**, **SceneKit**, or any other graphics framework for MacOS or iOS.
