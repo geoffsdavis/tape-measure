@@ -15,11 +15,11 @@
     <td>"Guess what? I got a fever!"</td>
   </tr>
   <tr>
-    <td>Examples</td>
+    <td><img src="images/amp.png"></td>
   </tr>
   <tr>
     <td>Works for vertical too</td>
-    <td>Guess what? I got a fever!</td>
+    <td>"What we do is, if we need that extra push over the cliff...you know what we do?"</td>
     <td>Dates are fun<br>(backed by timestamps)</td>
   </tr>
 </table>
@@ -58,7 +58,7 @@ TapeMeasure takes some initial parameters on instantiation, all of which can be 
 
 * **`valueOriginOffset: Double = 0.0`** An offset by **position** (graphical points) of the **origin** (location representing the **value** of 0.0), from the **position** of 0.0 pts. This might be useful to stagger the ticks so they don't neatly line up with segments, which span a graphical distance but define units of **value**. We'll see an example below. This is zero by default, to indicate no offset, so that the **value** of 0.0 would be at the **position** of 0.0 pts.
 
-* **`public var tickAlignmentEpsilon: CGFloat = 0.001`** Special property that provides a "fudge factor" for dealing with floating point math precision issues. TapeMeasure when determining if ticks line up perfectly with origins or fall with given boundaries. Likely you won't have to change this, but if you're dealing with very small fractional values, for instance, change this property to adjust the precision up or down, if needed.
+* **`public var tickAlignmentEpsilon: CGFloat = 0.001`** Special property that provides a "fudge factor" for dealing with floating point math precision issues. TapeMeasure uses this when determining if ticks line up perfectly with origins or fall with given boundaries. Likely you won't have to change this, but if for example you're dealing with very small fractional values, change this property as needed to adjust the precision up or down.
 
 
 ## Output
@@ -73,7 +73,7 @@ let segmentTickIndex: Int // zero-based index for determining which (if any) sub
 
  - A Tick Index of 0 represents a segment boundary
  - A Tick Index greater than 0 represents a subdivision boundary of a full segment, and is useful for rendering Ticks in a view
-      (e.g. for 4-tick segments, you could render text labels at index 0, long tick marks at 2, and short tick marks at 1 & 3)
+      (e.g. for 4-tick segments, you could render text labels and long tick marks at index 0, medium tick marks at 2, and short tick marks at 1 & 3)
       
 ## Example: Let's Make a Thermometer
 
@@ -111,7 +111,7 @@ var anchorPosition = tapeMeasure.startPosition
 // For all the changes listed below, we're going call this func every time for new ticks. 
 // We'll show it here the first time.
 
-var ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+let ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
 
 // Now iterate through the 'ticks' array with your graphical framework...
 ```
@@ -129,8 +129,10 @@ If we do some math, there's 180º between the freezing and boiling temperature. 
 ```
 tapeMeasure.segmentValue = 36.0
 
-// The last time this func call is shown, but you'll need to do it for every change in the steps below.
-var ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
+// The last time we show the ticks(...) func call, but you'll need to do it 
+// for every change in the steps below.
+
+let ticks = tapeMeasure.ticks(forAnchorValue: anchorValue, atAnchorPosition: anchorPosition)
 
 // And redraw the ticks..
 ```
