@@ -22,13 +22,34 @@
     <td><b>"What we do is, if we need that extra push over the cliff...you know what we do?"</b></td>
     <td><b>Dates are fun<br>(backed by timestamps)</b></td>
   </tr>
-
-
 </table>
 
 The class that takes a few basic parameters, and can dynamically return an array that represents the ticks of a tape measure, as well as other useful information. The class itself is stateless except for those parameters, and is independent of any graphics frameworks. It can be used with **SwiftUI**, **UIKit**, **CoreAnimation**, **SpriteKit**, **SceneKit**, or any other graphics framework for MacOS or iOS.
 
-## Key Concepts
+
+## Table of Contents
+
+* **[Technical Overview](#overview)**
+
+    * **[Key Concepts](#concepts)**
+    * **[Parameters](#parameters)**
+    * **[Outputs](#outputs)**
+
+* **[Examples](#examples)**
+
+* **[Installation](#installation)**
+
+* **[License](#license)**
+
+
+<a name="overview"/>
+
+## Technical Overview
+
+
+<a name="concepts"/>
+
+### Key Concepts
 
 * **Position** - A given "physical" (graphical) position on the tape measure. For instance, on a thermometer, the position for boiling water might at 300 graphical points.
 
@@ -42,7 +63,9 @@ The class that takes a few basic parameters, and can dynamically return an array
 
 * **Tick Index** - The index of ticks that defines a segment's starting boundary, as well as any segment subdivision boundaries. An index of 0 represents the segment's own starting boundary. Indices of greater than 0 represent the segment's subdivision staring boundaries.
 
-## Parameters
+<a name="parameters"/>
+
+### Parameters
 
 TapeMeasure takes some initial parameters on instantiation, all of which can be mutated at any time.
 
@@ -62,8 +85,9 @@ TapeMeasure takes some initial parameters on instantiation, all of which can be 
 
 * **`public var tickAlignmentEpsilon: CGFloat = 0.001`** Special property that provides a "fudge factor" for dealing with floating point math precision issues. TapeMeasure uses this when determining if ticks line up perfectly with origins or fall with given boundaries. Likely you won't have to change this, but if for example you're dealing with very small fractional values, change this property as needed to adjust the precision up or down.
 
+<a name="outputs"/>
 
-## Output
+### Outputs
 
 Once the class is instantiated, when passed a given position and value on the TapeMeasure, it will pass back an array of Ticks within the given positional boundaries, with all ticks positioned to scale. Each Tick has a relative position within the positional boundaries, the value for that Tick, and an index.
 
@@ -128,6 +152,8 @@ func position(
 ) -> CGFloat
 ```
       
+<a name="examples"/>
+
 ## Example: Let's Make a Thermometer
 
 ### Step #0: Create a basic thermometer
@@ -299,3 +325,17 @@ print(feverValue) // prints "103.8"
 ```
 
 ![image](/images/tape_measure_11.png)
+
+
+<a name="installation"/>
+
+## Installation
+
+
+
+
+<a name="license"/>
+
+## License
+
+TapeMeasure is offered under the MIT License.
