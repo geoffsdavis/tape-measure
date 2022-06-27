@@ -12,10 +12,11 @@ import AppKit
 class AmpView: NSView {
     
     enum Constants {
-        static let labels = ["PRESENCE", "BASS", "MIDDLE", "TREBLE", "VOLUME I"]
-        static let settings = [7.2, 5.1, 10.0, 10.0, 10.0]
+        static let labels = ["BASS", "MIDDLE", "TREBLE", "VOLUME I"]
+        static let settings = [7.2, 10.0, 5.1, 10.0]
         static let labelColor = NSColor.black // NSColor(red: 0.35, green: 0.2, blue: 0.05, alpha: 1.0)
-        static let dialPositions = [-320.0, -160.0, 0.0, 160.0, 320.0]
+        static let dialPositions = [-300.0, -100.0, 100.0, 300.0]
+        static let dialRadius: CGFloat = 30.0
     }
     
     var xCenter: CGFloat {
@@ -72,12 +73,12 @@ class AmpView: NSView {
         for i in 0..<Constants.labels.count {
             let labelView = NSTextView(frame:
                 NSRect(x: xCenter + Constants.dialPositions[i] - 50.0,
-                       y: yCenter + 53.0,
+                       y: yCenter + 63.0,
                        width: 100.0,
                        height: 20.0
                 )
             )
-            labelView.font = NSFont.systemFont(ofSize: 16.0, weight: .semibold)
+            labelView.font = NSFont.systemFont(ofSize: 18.0, weight: .semibold)
             labelView.alignment = .center
             labelView.textColor = Constants.labelColor
             labelView.backgroundColor = .clear
@@ -97,8 +98,8 @@ class AmpView: NSView {
             let dialView = dialLabelViews[i]
             dialView.frame = NSRect(x: xCenter + Constants.dialPositions[i],
                                     y: yCenter - 20.0,
-                                    width: 120.0,
-                                    height: 120.0
+                                    width: 140.0,
+                                    height: 140.0
             )
             addSubview(dialView)
             dialView.layer = CALayer()
@@ -113,10 +114,10 @@ class AmpView: NSView {
             let dialBackground = CAShapeLayer()
             dialBackground.path = XPBezierPath(
                 roundedRect: NSRect(
-                    origin: CGPoint(x: -20.0, y: -20.0),
-                    size: CGSize(width: 40.0, height: 40.0)
+                    origin: CGPoint(x: -Constants.dialRadius, y: -Constants.dialRadius),
+                    size: CGSize(width: Constants.dialRadius * 2.0, height: Constants.dialRadius * 2.0)
                 ),
-                cornerRadius: 20.0
+                cornerRadius: Constants.dialRadius
             ).cgPath
             dialBackground.strokeColor = NSColor.black.cgColor
             dialBackground.lineWidth = 3.0
@@ -131,8 +132,8 @@ class AmpView: NSView {
             let dialPath = XPBezierPath()
             let value = Constants.settings[i]
             let position = tapeMeasrue.position(forValue: value, withAnchorValue: 5.5, atAnchorPosition: 0.0)
-            let xPos = (sin(position) * 20.0)
-            let yPos = (cos(position) * 20.0)
+            let xPos = (sin(position) * Constants.dialRadius)
+            let yPos = (cos(position) * Constants.dialRadius)
             dialPath.move(to: CGPoint(x: xPos, y: yPos))
             dialPath.line(to: CGPoint(x: 0.0, y: 0.0))
             dialMarker.path = dialPath.cgPath
@@ -160,17 +161,17 @@ class AmpView: NSView {
             tickLayer.lineWidth = 2.0
             let path = XPBezierPath()
             for tick in ticks {
-                let xPos = (sin(tick.position) * 54.0) + (dialView.frame.width / 2.0)
-                let yPos = (cos(tick.position) * 54.0)
+                let xPos = (sin(tick.position) * 58.0) + (dialView.frame.width / 2.0)
+                let yPos = (cos(tick.position) * 58.0)
                 if tick.value.truncatingRemainder(dividingBy: 2) == 0 || Int(tick.value) == 11 {
                     let labelView = NSTextView(frame:
                         NSRect(x: xPos - 60.0,
-                               y: yPos - 40.0 + 28.0,
+                               y: yPos - 40.0 + 38.0,
                                width: 120.0,
                                height: 80.0
                         )
                     )
-                    labelView.font = NSFont.systemFont(ofSize: 16.0, weight: .bold)
+                    labelView.font = NSFont.systemFont(ofSize: 18.0, weight: .bold)
                     labelView.alignment = .center
                     labelView.textColor = Constants.labelColor
                     labelView.backgroundColor = .clear
@@ -178,10 +179,10 @@ class AmpView: NSView {
                     dialView.addSubview(labelView)
                 }
                 else {
-                    let xInnerPos = (sin(tick.position) * 44.0) + (dialView.frame.width / 2.0)
-                    let yInnerPos = (cos(tick.position) * 44.0) + (dialView.frame.height / 2.0)
-                    let xOuterPos = (sin(tick.position) * 58.0) + (dialView.frame.width / 2.0)
-                    let yOuterPos = (cos(tick.position) * 58.0) + (dialView.frame.height / 2.0)
+                    let xInnerPos = (sin(tick.position) * 48.0) + (dialView.frame.width / 2.0)
+                    let yInnerPos = (cos(tick.position) * 48.0) + (dialView.frame.height / 2.0)
+                    let xOuterPos = (sin(tick.position) * 64.0) + (dialView.frame.width / 2.0)
+                    let yOuterPos = (cos(tick.position) * 64.0) + (dialView.frame.height / 2.0)
                     path.move(to: CGPoint(x: xInnerPos, y: yInnerPos))
                     path.line(to: CGPoint(x: xOuterPos, y: yOuterPos))
                 }
