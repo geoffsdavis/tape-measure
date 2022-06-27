@@ -68,14 +68,65 @@ TapeMeasure takes some initial parameters on instantiation, all of which can be 
 Once the class is instantiated, when passed a given position and value on the TapeMeasure, it will pass back an array of Ticks within the given positional boundaries, with all ticks positioned to scale. Each Tick has a relative position within the positional boundaries, the value for that Tick, and an index.
 
 ```
-let position: CGFloat // position of the Tick, in graphical points
-let value: Double // value of the Tick. Usually used for text labels
-let segmentTickIndex: Int // zero-based index for determining which (if any) sub-division boundary this tick represents
+func ticks(
+    forAnchorValue: Double,
+    atAnchorPosition: CGFloat
+) -> [Tick]
+```
+
+Which returns an array of...
+
+```
+struct Tick {
+
+    // position of the Tick, in graphical points
+    let position: CGFloat
+    
+    // value of the Tick. Usually used for text labels
+    let value: Double
+    
+    // zero-based index for determining which (if any) sub-division boundary this tick represents
+    let segmentTickIndex: Int  
+    
+}
 ```
 
  - A Tick Index of 0 represents a segment boundary
  - A Tick Index greater than 0 represents a subdivision boundary of a full segment, and is useful for rendering Ticks in a view
       (e.g. for 4-tick segments, you could render text labels and long tick marks at index 0, medium tick marks at 2, and short tick marks at 1 & 3)
+      
+Other output functions:
+
+```
+func originPosition(
+    withAnchorValue: Double,
+    atAnchorPosition: CGFloat
+) -> CGFloat
+```
+
+```
+func distanceToOrigin(
+    fromPosition: CGFloat,
+    withAnchorValue: Double,
+    atAnchorPosition: CGFloat
+) -> CGFloat
+```
+
+```
+func value(
+    atPosition: CGFloat,
+    withAnchorValue: Double,
+    atAnchorPosition: CGFloat
+) -> Double
+```
+
+```
+func position(
+    forValue: Double,
+    withAnchorValue: Double,
+    atAnchorPosition: CGFloat
+) -> CGFloat
+```
       
 ## Example: Let's Make a Thermometer
 
