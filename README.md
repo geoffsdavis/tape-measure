@@ -331,7 +331,7 @@ print(feverValue) // prints "103.8"
 
 ## Installation
 
-
+Why bother with Yet Another External Dependency? Currently, you can install TapeMeasure simply by downloading the <a href="TapeMeasure/TapeMeasure.swift">TapeMeasure class</a> contained in this project. It's fairly well unit-tested, and not likely to change often. Beyond that, it might be offered through Swift Package Manager, or Cocoapods, or something.
 
 
 <a name="license"/>
