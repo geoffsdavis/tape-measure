@@ -47,13 +47,13 @@ TapeMeasure takes some initial parameters on instantiation, all of which can be 
 
 * **`positionBounds: ClosedRange<CGFloat>`** Graphical position boundaries inside which TapeMeasure.Ticks will be generated. Ticks will only have positions within these boundaries. For convenience, pass in the boundaries which match the layout in the intended view. The returned Tick positions will match nicely.
 
-* **`direction: Direction`** Enum describing whether the Ticks are `.ascending` or `.descending` in value, within the supplied positionBounds
+* **`segmentDistance: CGFloat`** The graphical length of a single segment, in graphical points. This would be the visual scale of the tape measure.
 
 * **`segmentValue: Double`** The value per segment. This would be the value scale of the tape measure.
 
-* **`segmentDistance: CGFloat`** The graphical length of a single segment, in graphical points. This would be the visual scale of the tape measure.
-
 * **`ticksPerSegment: Int`** A value of 1 would indicated each segment is defined by a single tick, whereas greater than 1 would indicate a segment sub-divided into that many ticks.
+
+* **`direction: Direction`** Enum describing whether the Ticks are `.ascending` or `.descending` in value, within the supplied positionBounds
 
 * **`valueClippingBounds: ClosedRange<Double>? = nil`** This optional parameter clips a tape measure by value, **NOT** position. For instance, in a scrolling tape measure, if you don't want any ticks rendered below a **value** of 0.0, but also don't want to set any upper value bound, you would pass in a closed range of `0.0...Double.greatestFiniteMagnitude`. This is nil by default, to indicate no value clipping bounds.
 
@@ -92,8 +92,8 @@ We create a simple Mac app, and render some primitive line art to draw a thermom
 ```
 let tapeMeasure = TapeMeasure(
     positionBounds: -300...300.0,
-    segmentValue: 10.0,
     segmentLength: 60.0,
+    segmentValue: 10.0,
     ticksPerSegment: 4,
     direction: .ascending,
     valueClippingBounds: nil,
@@ -201,8 +201,8 @@ Here, we'll just set all the parameters properly on initialization. By now, you 
 ```
 let tapeMeasure = TapeMeasure(
     positionBounds: -300...300.0,
-    segmentValue: 2.0,
     segmentLength: 80.0,
+    segmentValue: 2.0,
     ticksPerSegment: 4,
     direction: .ascending,
     valueClippingBounds: 94.0...106.0,
