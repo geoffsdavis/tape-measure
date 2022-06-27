@@ -31,11 +31,11 @@ The class that takes a few basic parameters, and can dynamically return an array
 
 * **Position** - A given "physical" (graphical) position on the tape measure. For instance, on a thermometer, the position for boiling water might at 300 graphical points.
 
+* **Segment** - A span covering a single subdivision. On a real-world tape measure, a segment might define a distance of 1 cm, or maybe 1 inch.
+
 * **Value** - The actual value of measurement at a given position. For instance, on a thermometer, the value at the position for boiling water would be 100ºC (212ºF).
 
 * **Origin** - The position, in graphical points, where the **value** is 0.0. By default, segment borders always align with this position.
-
-* **Segment** - A span covering a single subdivision. On a real-world tape measure, a segment might define a distance of 1 cm, or maybe 1 inch.
 
 * **Tick** - Demarcations that define segments, as well as any subdivisions of segments. Put another way, a segment can be defined by one or more ticks.
 
