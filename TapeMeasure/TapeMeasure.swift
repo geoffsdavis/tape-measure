@@ -1,8 +1,16 @@
-import Foundation
-
-
-
-
+//  TAPE MEASURE
+//
+//  Copyright 2022 - Geoff Davis
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//
+//
+//
 // TapeMeasure is a convenience class for creating data to render a visual tape measure, or other visual effects
 // that need to be laid out, and perhaps dynamically scrolled and/or scaled due to animation or user interaction.
 //
@@ -55,6 +63,10 @@ import Foundation
 // - A Tick index greater than 0 represents a subdivision of a full segment, and is useful for rendering Ticks in a view
 //      (e.g. for 4-tick segments, render text labels at index 0, long tick marks at 2, and short tick marks at 1 & 3)
 //
+
+import Foundation
+
+
 
 public class TapeMeasure {
     
