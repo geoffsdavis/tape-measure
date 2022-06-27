@@ -47,7 +47,7 @@ TapeMeasure takes some initial parameters on instantiation, all of which can be 
 
 * **`positionBounds: ClosedRange<CGFloat>`** Graphical position boundaries inside which TapeMeasure.Ticks will be generated. Ticks will only have positions within these boundaries. For convenience, pass in the boundaries which match the layout in the intended view. The returned Tick positions will match nicely.
 
-* **`segmentDistance: CGFloat`** The graphical length of a single segment, in graphical points. This would be the visual scale of the tape measure.
+* **`segmentLength: CGFloat`** The graphical length of a single segment, in graphical points. This would be the visual scale of the tape measure.
 
 * **`segmentValue: Double`** The value per segment. This would be the value scale of the tape measure.
 
