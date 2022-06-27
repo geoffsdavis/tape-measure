@@ -74,8 +74,8 @@ public class TapeMeasure {
     // MARK: public parameters, exposed for mutation
     
     public var positionBounds: ClosedRange<CGFloat>
-    public var segmentValue: Double
     public var segmentLength: CGFloat
+    public var segmentValue: Double
     public var ticksPerSegment: Int
     public var direction: Direction
     public var valueClippingBounds: ClosedRange<Double>?
@@ -112,16 +112,16 @@ public class TapeMeasure {
     
     public init(
         positionBounds: ClosedRange<CGFloat>,
-        segmentValue: Double,
         segmentLength: CGFloat,
+        segmentValue: Double,
         ticksPerSegment: Int,
         direction: Direction,
         valueClippingBounds: ClosedRange<Double>? = nil,
         valueOriginOffset: Double = 0.0
     ) {
         self.positionBounds = positionBounds
-        self.segmentValue = abs(segmentValue)
         self.segmentLength = abs(segmentLength)
+        self.segmentValue = abs(segmentValue)
         self.ticksPerSegment = ticksPerSegment
         self.direction = direction
         self.valueClippingBounds = valueClippingBounds

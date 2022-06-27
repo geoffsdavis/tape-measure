@@ -116,8 +116,8 @@ class ThermometerView: NSView {
         // 1
         var tapeMeasure = TapeMeasure(
             positionBounds: -300...300.0,
-            segmentValue: 10.0,
             segmentLength: 60.0,
+            segmentValue: 10.0,
             ticksPerSegment: 4,
             direction: .ascending,
             valueClippingBounds: nil,
@@ -151,8 +151,8 @@ class ThermometerView: NSView {
         // 9
         tapeMeasure = TapeMeasure(
             positionBounds: -300...300.0,
-            segmentValue: 2.0,
             segmentLength: 80.0,
+            segmentValue: 2.0,
             ticksPerSegment: 4,
             direction: .ascending,
             valueClippingBounds: 94.0...106.0,

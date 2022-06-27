@@ -43,8 +43,8 @@ class AmpView: NSView {
     }()
 
     let tapeMeasrue = TapeMeasure(positionBounds: -3.0...3.0,
-                                  segmentValue: 1,
                                   segmentLength: 0.45,
+                                  segmentValue: 1,
                                   ticksPerSegment: 1,
                                   direction: .ascending,
                                   valueClippingBounds: 0.0...11.0
