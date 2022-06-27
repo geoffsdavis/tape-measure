@@ -7,21 +7,22 @@
     <td colspan="3"><b>EXAMPLES<b></td>
   </tr>
   <tr>
-    <td><b>Works for vertical too</b></td>
-    <td><b>"Guess what? I got a fever!"</b></td>
-    <td><b>Dates are fun<br>(backed by timestamps)</b></td>
-  </tr>
-  <tr>
-    <td rowspan="3"><img src="images/iv_measure.png"></td>
+    <td><img src="images/iv_measure.png"></td>
     <td><img src="images/thermometer.png"></td>
-    <td rowspan="3"><img src="images/time_decay_measure.png"></td>
+    <td><img src="images/time_decay_measure.png"></td>
   </tr>
-  <tr>
-    <td><b>"What we do is, if we need that extra push over the cliff...you know what we do?"</b></td>
+    <tr>
+    <td rowspan="2"><b>Works for vertical too</b></td>
+    <td><b>"Guess what? I got a fever!"</b></td>
+    <td rowspan="2"><b>Dates are fun<br>(backed by timestamps)</b></td>
   </tr>
   <tr>
     <td><img src="images/amp.png"></td>
   </tr>
+  <tr>
+    <td colspan="3"><b>"What we do is, if we need that extra push over the cliff...you know what we do?"</b></td>
+  </tr>
+
 
 </table>
 
