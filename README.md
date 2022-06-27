@@ -1,6 +1,6 @@
 # TapeMeasure
 
-**TapeMeasure** is a utility class, written in Swift, for rendering a visual tape measure, or any other graphical elements that need layout in a measured sequence. It can dynamically re-generate that data, so that the tape measure can be scrolled and/or scaled on the fly, due to animation or user interaction. 
+**TapeMeasure** is a utility class, written in Swift, for generating a visual tape measure, or any other graphical elements that need layout in a measured sequence. It can dynamically re-generate that data, so that the tape measure can be scrolled and/or scaled on the fly, due to animation or user interaction. 
 
 <table>
   <tr>
